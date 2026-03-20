@@ -23,6 +23,9 @@ export type Bindings = {
   IAI_ADMIN_SECRET:      string
   APP_URL:               string
 
+  // Email (Resend — resend.com, free 3k/month)
+  RESEND_API_KEY?:       string
+
   // Social OAuth (set via wrangler secret put)
   GOOGLE_CLIENT_ID?:     string
   GOOGLE_CLIENT_SECRET?: string

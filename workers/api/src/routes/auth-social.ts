@@ -254,7 +254,20 @@ export async function handleSocialAuth(
 
       // Encode user as base64 JSON and redirect to frontend callback
       const userB64 = btoa(encodeURIComponent(JSON.stringify(user)))
-      return Response.redirect(`${appUrl}/auth/callback?token=${token}&user=${userB64}`)
+
+      // Set cross-domain cookie (.iai.one covers all subdomains)
+      const redirect = Response.redirect(`${appUrl}/auth/callback?token=${token}&user=${userB64}`)
+      const res = new Response(redirect.body, redirect)
+      res.headers.set('Set-Cookie', [
+        `iai_token=${token}`,
+        'Domain=.iai.one',
+        'Path=/',
+        'Secure',
+        'HttpOnly',
+        'SameSite=Lax',
+        `Max-Age=${EXP_7D}`,
+      ].join('; '))
+      return res
 
     } catch (e) {
       console.error('[SocialAuth]', provider, e)
