@@ -23,6 +23,14 @@ export type Bindings = {
   IAI_ADMIN_SECRET:      string
   APP_URL:               string
 
+  // Social OAuth (set via wrangler secret put)
+  GOOGLE_CLIENT_ID?:     string
+  GOOGLE_CLIENT_SECRET?: string
+  FACEBOOK_APP_ID?:      string
+  FACEBOOK_APP_SECRET?:  string
+  X_CLIENT_ID?:          string
+  X_CLIENT_SECRET?:      string
+
   // Stripe (set via wrangler secret put)
   STRIPE_SECRET_KEY?:    string
   STRIPE_WEBHOOK_SECRET?: string
