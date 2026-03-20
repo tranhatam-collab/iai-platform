@@ -5,7 +5,7 @@
 
 import { json } from '../lib/cors'
 import { hashPassword, verifyPassword, signJWT, requireAuth } from '../lib/auth'
-import { sendEmail, verifyEmailHtml, welcomeEmailHtml } from '../lib/email'
+import { sendEmail, emailEnv, verifyEmailHtml, welcomeEmailHtml } from '../lib/email'
 import type { Bindings } from '../types'
 
 const EXP_7D  = 7  * 24 * 60 * 60
@@ -85,19 +85,20 @@ export async function handleUsers(
       VALUES (?, ?, ?, ?, ?, 'learner', 0, 50, datetime('now'), datetime('now'))
     `).bind(id, handle.toLowerCase(), name, email.toLowerCase(), hash).run()
 
-    // Send verification email if Resend is configured
-    if (env.RESEND_API_KEY) {
-      const token = crypto.randomUUID()
-      await env.CACHE.put(`verify_email:${token}`, id, { expirationTtl: 86400 }) // 24h
+    // Send verification email if email service is configured
+    const eEnv = emailEnv(env)
+    if (eEnv.MAIL_API_URL || eEnv.RESEND_API_KEY) {
+      const verifyToken = crypto.randomUUID()
+      await env.CACHE.put(`verify_email:${verifyToken}`, id, { expirationTtl: 86400 }) // 24h
 
-      const link = `${apiUrl}/v1/users/verify-email?token=${token}`
+      const link = `${apiUrl}/v1/users/verify-email?token=${verifyToken}`
       try {
         await sendEmail({
+          from:    'IAI <noreply@iai.one>',
           to:      email,
           subject: 'Xác nhận email — IAI',
           html:    verifyEmailHtml({ name: name!, handle: handle.toLowerCase(), link }),
-          apiKey:  env.RESEND_API_KEY,
-        })
+        }, eEnv)
       } catch (e) {
         console.error('[Email]', e)
         // Don't block registration if email fails
@@ -140,15 +141,13 @@ export async function handleUsers(
 
     if (!user) return Response.redirect(`${appUrl}/login?error=user_not_found`)
 
-    // Send welcome email
-    if (env.RESEND_API_KEY) {
-      sendEmail({
-        to:      user.email,
-        subject: 'Chào mừng tới IAI! 🎓',
-        html:    welcomeEmailHtml({ name: user.name, handle: user.handle, appUrl }),
-        apiKey:  env.RESEND_API_KEY,
-      }).catch(e => console.error('[Email welcome]', e))
-    }
+    // Send welcome email (fire-and-forget)
+    sendEmail({
+      from:    'IAI <noreply@iai.one>',
+      to:      user.email,
+      subject: 'Chào mừng tới IAI!',
+      html:    welcomeEmailHtml({ name: user.name, handle: user.handle, appUrl }),
+    }, emailEnv(env)).catch(e => console.error('[Email welcome]', e))
 
     const jwt = await signJWT(
       { sub: user.id, hdl: user.handle, exp: Math.floor(Date.now() / 1000) + EXP_7D },
@@ -221,8 +220,9 @@ export async function handleUsers(
       'SELECT id, handle, name, email, verified FROM users WHERE email=?'
     ).bind(body.email?.toLowerCase()).first<{ id: string; handle: string; name: string; email: string; verified: number }>()
 
+    const eEnv2 = emailEnv(env)
     // Always return OK to prevent email enumeration
-    if (!user || user.verified || !env.RESEND_API_KEY)
+    if (!user || user.verified || (!eEnv2.MAIL_API_URL && !eEnv2.RESEND_API_KEY))
       return J({ ok: true, message: 'Nếu email tồn tại và chưa xác nhận, chúng tôi sẽ gửi lại.' })
 
     const token = crypto.randomUUID()
@@ -230,11 +230,11 @@ export async function handleUsers(
     const link = `${apiUrl}/v1/users/verify-email?token=${token}`
 
     sendEmail({
+      from:    'IAI <noreply@iai.one>',
       to:      user.email,
       subject: 'Xác nhận email — IAI',
       html:    verifyEmailHtml({ name: user.name, handle: user.handle, link }),
-      apiKey:  env.RESEND_API_KEY,
-    }).catch(e => console.error('[Email resend]', e))
+    }, eEnv2).catch(e => console.error('[Email resend]', e))
 
     return J({ ok: true, message: 'Email xác nhận đã được gửi lại.' })
   }

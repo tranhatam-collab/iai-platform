@@ -23,8 +23,10 @@ export type Bindings = {
   IAI_ADMIN_SECRET:      string
   APP_URL:               string
 
-  // Email (Resend — resend.com, free 3k/month)
-  RESEND_API_KEY?:       string
+  // Email — self-hosted IAI Mail API (primary) or Resend (fallback)
+  MAIL_API_URL?:         string   // e.g. https://mail.iai.one/api
+  MAIL_API_KEY?:         string   // secret key for IAI Mail API
+  RESEND_API_KEY?:       string   // fallback if self-hosted not ready
 
   // Social OAuth (set via wrangler secret put)
   GOOGLE_CLIENT_ID?:     string
