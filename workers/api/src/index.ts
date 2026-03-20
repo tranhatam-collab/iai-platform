@@ -5,13 +5,17 @@
 // ═══════════════════════════════════════════════════════════════
 
 import { json, handleOptions } from './lib/cors'
-import { handleAdmin }   from './routes/admin'
-import { handleVerify }  from './routes/verify'
-import { handleUsers }   from './routes/users'
-import { handlePosts }   from './routes/posts'
-import { handleLessons } from './routes/lessons'
-import { handleMedia }   from './routes/media'
-import { handleIpfs }    from './routes/ipfs'
+import { handleAdmin }       from './routes/admin'
+import { handleVerify }      from './routes/verify'
+import { handleUsers }       from './routes/users'
+import { handlePosts }       from './routes/posts'
+import { handleLessons }     from './routes/lessons'
+import { handleCourses }     from './routes/courses'
+import { handleMarketplace } from './routes/marketplace'
+import { handleReviews }     from './routes/reviews'
+import { handleCopyright }   from './routes/copyright'
+import { handleMedia }       from './routes/media'
+import { handleIpfs }        from './routes/ipfs'
 import type { Bindings } from './types'
 
 export default {
@@ -51,13 +55,17 @@ export default {
 
     // ── Route dispatcher ──────────────────────────────────
     try {
-      if (path.startsWith('/v1/admin'))   return handleAdmin(request, env, path)
-      if (path.startsWith('/v1/verify'))  return handleVerify(request, env, path)
-      if (path.startsWith('/v1/users'))   return handleUsers(request, env, path)
-      if (path.startsWith('/v1/posts'))   return handlePosts(request, env, path)
-      if (path.startsWith('/v1/lessons')) return handleLessons(request, env, path)
-      if (path.startsWith('/v1/media'))   return handleMedia(request, env, path)
-      if (path.startsWith('/v1/ipfs'))    return handleIpfs(request, env, path)
+      if (path.startsWith('/v1/admin'))       return handleAdmin(request, env, path)
+      if (path.startsWith('/v1/verify'))      return handleVerify(request, env, path)
+      if (path.startsWith('/v1/users'))       return handleUsers(request, env, path)
+      if (path.startsWith('/v1/posts'))       return handlePosts(request, env, path)
+      if (path.startsWith('/v1/lessons'))     return handleLessons(request, env, path)
+      if (path.startsWith('/v1/courses'))     return handleCourses(request, env, path)
+      if (path.startsWith('/v1/marketplace')) return handleMarketplace(request, env, path)
+      if (path.startsWith('/v1/reviews'))     return handleReviews(request, env, path)
+      if (path.startsWith('/v1/copyright'))   return handleCopyright(request, env, path)
+      if (path.startsWith('/v1/media'))       return handleMedia(request, env, path)
+      if (path.startsWith('/v1/ipfs'))        return handleIpfs(request, env, path)
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : 'Internal server error'
       console.error('[IAI API]', method, path, msg)

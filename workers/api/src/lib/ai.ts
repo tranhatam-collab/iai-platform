@@ -86,6 +86,35 @@ export async function factCheck(content: string, apiKey: string): Promise<FactCh
   return { ...result, processing_ms: Date.now() - start, model_used: MODEL }
 }
 
+// ── Content Quality Scorer ───────────────────────────────────
+
+export async function scoreContent(
+  content: string,
+  env: { ANTHROPIC_API_KEY: string }
+): Promise<{ score: number; summary: string }> {
+  const response = await fetch(CLAUDE_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 256,
+      messages: [{
+        role: 'user',
+        content: `Đánh giá chất lượng nội dung giáo dục sau theo thang 0-100. Tiêu chí: độ rõ ràng, chính xác, có ví dụ, cấu trúc tốt. Trả về JSON: {"score": <số>, "summary": "<nhận xét ngắn tiếng Việt>"}\n\nNội dung:\n${content.slice(0, 1200)}`,
+      }],
+    }),
+  })
+  if (!response.ok) return { score: 0, summary: 'Không thể đánh giá tự động' }
+  const data = await response.json() as { content: Array<{ text: string }> }
+  const text = data.content[0]?.text ?? '{}'
+  const m = text.match(/\{[\s\S]*\}/)
+  try { return JSON.parse(m?.[0] ?? '{}') } catch { return { score: 0, summary: '' } }
+}
+
 // ── Lesson Generator ─────────────────────────────────────────
 
 const LESSON_SYSTEM = `Bạn là IAI Mind — AI tạo bài học cho nền tảng IAI.one.
