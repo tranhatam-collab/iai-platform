@@ -1,0 +1,104 @@
+{
+  "name": "IAI Auto Lesson Generator",
+  "description": "Scheduled: Generate daily lessons on trending topics, auto fact-check, auto publish if score >= 70",
+  "nodes": [
+    {
+      "id": "schedule-1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "name": "Daily Lesson Schedule",
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "hours", "minutesInterval": 24 }]
+        }
+      }
+    },
+    {
+      "id": "topics-1",
+      "type": "n8n-nodes-base.set",
+      "name": "Set Daily Topics",
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "topics",
+              "value": "[\"AI trong giáo dục Việt Nam\",\"Blockchain và bằng cấp\",\"ChatGPT trong học tập\",\"Kiểm chứng thông tin\",\"Lịch sử Internet\"]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pick-topic",
+      "type": "n8n-nodes-base.code",
+      "name": "Pick Random Topic",
+      "parameters": {
+        "jsCode": "const topics = JSON.parse($json.topics); const topic = topics[Math.floor(Math.random() * topics.length)]; return [{ json: { topic } }];"
+      }
+    },
+    {
+      "id": "gen-lesson",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Generate Lesson with IAI Mind",
+      "parameters": {
+        "url": "https://api.iai.one/v1/lessons/generate",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{ $env.IAI_BOT_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "topic",    "value": "={{ $json.topic }}" },
+            { "name": "level",    "value": "beginner" },
+            { "name": "language", "value": "vi" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "check-quality",
+      "type": "n8n-nodes-base.if",
+      "name": "Quality Check (score >= 70)",
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.readyToPublish }}",
+              "value2": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "publish-lesson",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Publish Lesson",
+      "parameters": {
+        "url": "=https://api.iai.one/v1/lessons/{{ $json.lessonId }}/publish",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{ $env.IAI_BOT_TOKEN }}" }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily Lesson Schedule": { "main": [[{ "node": "Set Daily Topics",    "type": "main", "index": 0 }]] },
+    "Set Daily Topics":      { "main": [[{ "node": "Pick Random Topic",   "type": "main", "index": 0 }]] },
+    "Pick Random Topic":     { "main": [[{ "node": "Generate Lesson with IAI Mind", "type": "main", "index": 0 }]] },
+    "Generate Lesson with IAI Mind": { "main": [[{ "node": "Quality Check (score >= 70)", "type": "main", "index": 0 }]] },
+    "Quality Check (score >= 70)":   { "main": [[{ "node": "Publish Lesson", "type": "main", "index": 0 }]] }
+  },
+  "meta": {
+    "platform": "iai.one",
+    "schedule": "daily at 08:00 UTC+7",
+    "description": "Tự động tạo bài học hàng ngày, kiểm chứng, và publish nếu đạt chất lượng"
+  }
+}

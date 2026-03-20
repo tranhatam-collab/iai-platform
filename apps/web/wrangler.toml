@@ -1,0 +1,28 @@
+name                     = "iai-web"
+compatibility_date       = "2024-09-23"
+compatibility_flags      = ["nodejs_compat"]
+pages_build_output_dir   = ".next"
+
+[[d1_databases]]
+binding       = "DB"
+database_name = "iai-db"
+database_id   = "PASTE_YOUR_D1_ID_HERE"
+
+[[kv_namespaces]]
+binding    = "CACHE"
+id         = "PASTE_CACHE_KV_ID_HERE"
+preview_id = "PASTE_CACHE_PREVIEW_KV_ID"
+
+[env.production]
+vars = {
+  IAI_ENV  = "production",
+  API_URL  = "https://api.iai.one",
+  CDN_URL  = "https://cdn.iai.one"
+}
+
+[env.dev]
+vars = {
+  IAI_ENV  = "development",
+  API_URL  = "http://localhost:8787",
+  CDN_URL  = "http://localhost:8787"
+}

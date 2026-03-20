@@ -1,0 +1,51 @@
+name: Deploy IAI Web → Cloudflare Pages
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'apps/web/**'
+      - 'packages/**'
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Build & Deploy IAI Web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/web
+
+      - name: Type check
+        run: npm run typecheck
+        working-directory: apps/web
+
+      - name: Build Next.js
+        run: npm run build
+        working-directory: apps/web
+        env:
+          NEXT_PUBLIC_API_URL:  ${{ secrets.NEXT_PUBLIC_API_URL || 'https://api.iai.one' }}
+          NEXT_PUBLIC_CDN_URL:  ${{ secrets.NEXT_PUBLIC_CDN_URL || 'https://cdn.iai.one' }}
+          NEXT_PUBLIC_IAI_ENV:  production
+          NEXT_PUBLIC_SITE_URL: https://iai.one
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken:      ${{ secrets.CF_API_TOKEN }}
+          accountId:     ${{ secrets.CF_ACCOUNT_ID }}
+          projectName:   iai-web
+          directory:     apps/web/.next
+          gitHubToken:   ${{ secrets.GITHUB_TOKEN }}
+          branch:        ${{ github.ref_name }}

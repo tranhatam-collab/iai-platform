@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.wrangler/
+dist/
+build/
+out/
+*.env
+.env
+.env.local
+.env.production
+.env.development
+.dev.vars
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,132 @@
+{
+  "name": "IAI Auto Fact-Check",
+  "description": "New Post → AI Verify → Update DB → Notify if Disputed",
+  "nodes": [
+    {
+      "id": "trigger-1",
+      "type": "n8n-nodes-base.webhook",
+      "name": "New Post Trigger",
+      "parameters": {
+        "path": "new-post",
+        "method": "POST",
+        "responseMode": "onReceived"
+      }
+    },
+    {
+      "id": "verify-1",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Call IAI Verify API",
+      "parameters": {
+        "url": "https://api.iai.one/v1/verify/post",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{ $env.IAI_BOT_TOKEN }}" },
+            { "name": "Content-Type",  "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "postId",  "value": "={{ $json.postId }}" },
+            { "name": "content", "value": "={{ $json.content }}" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "check-disputed",
+      "type": "n8n-nodes-base.if",
+      "name": "Is Disputed?",
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.result.status }}",
+              "operation": "equal",
+              "value2": "disputed"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "comment-disputed",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Auto AI Comment (Disputed)",
+      "parameters": {
+        "url": "https://api.iai.one/v1/posts/comment",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{ $env.IAI_BOT_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "postId",   "value": "={{ $('New Post Trigger').item.json.postId }}" },
+            { "name": "content",  "value": "=⚠️ IAI Verify Bot: {{ $json.result.summary }}" },
+            { "name": "isAI",     "value": true }
+          ]
+        }
+      }
+    },
+    {
+      "id": "check-verified",
+      "type": "n8n-nodes-base.if",
+      "name": "Is Verified? (score >= 90)",
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.result.truth_score }}",
+              "operation": "largerEqual",
+              "value2": 90
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pin-ipfs",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Pin to IPFS (if Phase 3 enabled)",
+      "parameters": {
+        "url": "https://api.iai.one/v1/ipfs/pin",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{ $env.IAI_BOT_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "postId",  "value": "={{ $('New Post Trigger').item.json.postId }}" },
+            { "name": "content", "value": "={{ $('New Post Trigger').item.json.content }}" },
+            { "name": "score",   "value": "={{ $json.result.truth_score }}" }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "New Post Trigger":       { "main": [[{ "node": "Call IAI Verify API", "type": "main", "index": 0 }]] },
+    "Call IAI Verify API":    { "main": [[{ "node": "Is Disputed?",         "type": "main", "index": 0 }],
+                                         [{ "node": "Is Verified? (score >= 90)", "type": "main", "index": 0 }]] },
+    "Is Disputed?":           { "main": [[{ "node": "Auto AI Comment (Disputed)", "type": "main", "index": 0 }]] },
+    "Is Verified? (score >= 90)": { "main": [[{ "node": "Pin to IPFS (if Phase 3 enabled)", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "platform": "iai.one",
+    "version": "1.0",
+    "description": "Tự động kiểm chứng mọi bài viết mới, comment nếu bị tranh luận, và pin lên IPFS nếu đạt 90+"
+  }
+}

@@ -1,0 +1,47 @@
+name = "iai-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[routes]]
+pattern = "api.iai.one/*"
+zone_name = "iai.one"
+
+# ── D1 Database ──────────────────────────────────────────
+[[d1_databases]]
+binding      = "DB"
+database_name = "iai-db"
+database_id  = "PASTE_YOUR_D1_ID_HERE"
+
+# ── KV Namespaces ─────────────────────────────────────────
+[[kv_namespaces]]
+binding    = "CACHE"
+id         = "PASTE_CACHE_KV_ID_HERE"
+preview_id = "PASTE_CACHE_PREVIEW_KV_ID"
+
+[[kv_namespaces]]
+binding    = "SESSIONS"
+id         = "PASTE_SESSIONS_KV_ID_HERE"
+preview_id = "PASTE_SESSIONS_PREVIEW_KV_ID"
+
+# ── R2 Bucket ─────────────────────────────────────────────
+[[r2_buckets]]
+binding             = "MEDIA"
+bucket_name         = "iai-media"
+preview_bucket_name = "iai-media-dev"
+
+# ── Env vars (non-secret) ─────────────────────────────────
+[vars]
+ALLOWED_ORIGINS = "https://iai.one,https://www.iai.one,https://ai.muonnoi.org"
+N8N_BASE_URL    = "https://flows.iai.one"
+SELF_URL        = "https://api.iai.one"
+IAI_ENV         = "production"
+
+# ── Dev environment ───────────────────────────────────────
+[env.dev]
+vars = { IAI_ENV = "development", ALLOWED_ORIGINS = "http://localhost:8788,http://localhost:3000" }
+
+[[env.dev.d1_databases]]
+binding       = "DB"
+database_name = "iai-db-dev"
+database_id   = "PASTE_DEV_D1_ID_HERE"
