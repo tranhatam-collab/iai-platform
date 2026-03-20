@@ -14,6 +14,7 @@ import { handleCourses }     from './routes/courses'
 import { handleMarketplace } from './routes/marketplace'
 import { handleReviews }     from './routes/reviews'
 import { handleCopyright }   from './routes/copyright'
+import { handlePayment }     from './routes/payment'
 import { handleMedia }       from './routes/media'
 import { handleIpfs }        from './routes/ipfs'
 import type { Bindings } from './types'
@@ -64,6 +65,7 @@ export default {
       if (path.startsWith('/v1/marketplace')) return handleMarketplace(request, env, path)
       if (path.startsWith('/v1/reviews'))     return handleReviews(request, env, path)
       if (path.startsWith('/v1/copyright'))   return handleCopyright(request, env, path)
+      if (path.startsWith('/v1/payment'))     return handlePayment(request, env, path)
       if (path.startsWith('/v1/media'))       return handleMedia(request, env, path)
       if (path.startsWith('/v1/ipfs'))        return handleIpfs(request, env, path)
     } catch (e: unknown) {

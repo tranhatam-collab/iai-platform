@@ -21,6 +21,12 @@ export type Bindings = {
   JWT_SECRET:            string
   N8N_WEBHOOK_SECRET:    string
   IAI_ADMIN_SECRET:      string
+  APP_URL:               string
+
+  // Stripe (set via wrangler secret put)
+  STRIPE_SECRET_KEY?:    string
+  STRIPE_WEBHOOK_SECRET?: string
+  STRIPE_PUB_KEY?:       string
 
   // Phase 3 Web3 (optional)
   PINATA_JWT?:           string
