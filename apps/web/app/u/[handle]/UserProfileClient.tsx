@@ -99,7 +99,7 @@ export function UserProfileClient({ handle }: Props) {
           {[
             { label: 'Trust Score',  value: `${user.trust_score}`,  color: getTrustColor(user.trust_score) },
             { label: 'Reputation',   value: String(user.reputation), color: 'text-white/70' },
-            { label: 'Cấp độ AI',    value: String(user.ai_score),   color: 'text-cyan-iai' },
+            { label: 'Cấp độ AI',    value: String(user.edu_level),  color: 'text-cyan-iai' },
           ].map(s => (
             <div key={s.label} className="card p-4 text-center">
               <div className={`text-xl font-bold font-serif ${s.color}`}>{s.value}</div>

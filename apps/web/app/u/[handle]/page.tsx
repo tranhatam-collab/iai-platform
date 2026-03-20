@@ -2,6 +2,8 @@
 //  IAI User Profile Page
 // ═══════════════════════════════════════════════════════════════
 
+export const runtime = 'edge'
+
 import type { Metadata } from 'next'
 import { UserProfileClient } from './UserProfileClient'
 

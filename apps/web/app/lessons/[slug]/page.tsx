@@ -2,6 +2,8 @@
 //  IAI Lesson Detail Page
 // ═══════════════════════════════════════════════════════════════
 
+export const runtime = 'edge'
+
 import type { Metadata } from 'next'
 import { LessonDetail } from './LessonDetail'
 

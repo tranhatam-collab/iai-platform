@@ -2,6 +2,8 @@
 //  IAI Post Detail Page
 // ═══════════════════════════════════════════════════════════════
 
+export const runtime = 'edge'
+
 import type { Metadata } from 'next'
 import { PostDetailClient } from './PostDetailClient'
 
