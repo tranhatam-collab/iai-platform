@@ -6,12 +6,12 @@ pages_build_output_dir   = ".next"
 [[d1_databases]]
 binding       = "DB"
 database_name = "iai-db"
-database_id   = "PASTE_YOUR_D1_ID_HERE"
+database_id   = "a806b0d9-027a-4887-ae7a-3abfbed04a2f"
 
 [[kv_namespaces]]
 binding    = "CACHE"
-id         = "PASTE_CACHE_KV_ID_HERE"
-preview_id = "PASTE_CACHE_PREVIEW_KV_ID"
+id         = "845da2404b6b44ac92d65b57966b221c"
+preview_id = "599fb46d70e5434fba40f547e89d963d"
 
 [env.production]
 vars = {

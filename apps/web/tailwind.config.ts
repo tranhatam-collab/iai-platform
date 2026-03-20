@@ -26,6 +26,7 @@ const config: Config = {
         },
         // Cyan of Intelligence
         cyan: {
+          DEFAULT: '#00D4FF',
           iai:     '#00D4FF',
           mid:     '#0099CC',
           deep:    '#005580',
