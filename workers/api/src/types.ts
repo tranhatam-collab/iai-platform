@@ -20,6 +20,7 @@ export type Bindings = {
   ANTHROPIC_API_KEY:     string
   JWT_SECRET:            string
   N8N_WEBHOOK_SECRET:    string
+  IAI_ADMIN_SECRET:      string
 
   // Phase 3 Web3 (optional)
   PINATA_JWT?:           string
