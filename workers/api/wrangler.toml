@@ -32,9 +32,10 @@ preview_bucket_name = "iai-media-dev"
 
 # ── Env vars (non-secret) ─────────────────────────────────
 [vars]
-ALLOWED_ORIGINS = "https://iai.one,https://www.iai.one,https://ai.muonnoi.org"
+ALLOWED_ORIGINS = "https://app.iai.one,https://www.app.iai.one,https://iai.one,https://www.iai.one,https://ai.muonnoi.org"
 N8N_BASE_URL    = "https://flows.iai.one"
 SELF_URL        = "https://api.iai.one"
+APP_URL         = "https://app.iai.one"
 IAI_ENV         = "production"
 
 # ── Dev environment ───────────────────────────────────────

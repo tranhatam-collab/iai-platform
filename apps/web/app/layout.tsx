@@ -9,6 +9,7 @@ import { Navbar } from '@/components/ui/Navbar'
 import { Footer } from '@/components/ui/Footer'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://app.iai.one'),
   title: {
     default: 'IAI — Intelligence · Artistry · International',
     template: '%s | IAI',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type:        'website',
     locale:      'vi_VN',
-    url:         'https://iai.one',
+    url:         'https://app.iai.one',
     siteName:    'IAI',
     title:       'IAI — Intelligence · Artistry · International',
     description: 'Giáo dục bằng sự thật. Lưu trữ bởi phi tập trung.',

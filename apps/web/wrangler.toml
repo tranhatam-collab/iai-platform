@@ -14,7 +14,7 @@ id         = "845da2404b6b44ac92d65b57966b221c"
 preview_id = "599fb46d70e5434fba40f547e89d963d"
 
 [env.production]
-vars = { IAI_ENV = "production", API_URL = "https://api.iai.one", CDN_URL = "https://cdn.iai.one" }
+vars = { IAI_ENV = "production", APP_URL = "https://app.iai.one", API_URL = "https://api.iai.one", CDN_URL = "https://cdn.iai.one" }
 
 [env.preview]
 vars = { IAI_ENV = "development", API_URL = "http://localhost:8787", CDN_URL = "http://localhost:8787" }
