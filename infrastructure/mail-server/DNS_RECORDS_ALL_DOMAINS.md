@@ -1,5 +1,5 @@
 # IAI Mail Server — DNS Records cho tất cả 12 domains
-**VPS IP:** `5.223.19.241`
+**VPS IP:** `89.167.116.167`
 **Mail server:** `mail.iai.one`
 **Ngày tạo:** 2026-03-21
 
@@ -11,7 +11,7 @@
 ## BƯỚC 0 — Cài PTR (Reverse DNS) trên Hetzner — làm trước tiên!
 
 > Vào **console.hetzner.com → Servers → mail-iai → Networking → IPv4**
-> Click vào bút chì cạnh `5.223.19.241` → nhập: `mail.iai.one` → Save
+> Click vào bút chì cạnh `89.167.116.167` → nhập: `mail.iai.one` → Save
 
 Đây là bắt buộc để Gmail/Hotmail không đưa email vào spam.
 
@@ -21,7 +21,7 @@
 
 | Type | Name | Value | Priority | Proxy |
 |------|------|-------|----------|-------|
-| A | `mail` | `5.223.19.241` | — | **OFF** ☁️ |
+| A | `mail` | `89.167.116.167` | — | **OFF** ☁️ |
 | MX | `@` | `mail.iai.one` | `10` | OFF |
 | TXT | `@` | `v=spf1 mx a:mail.iai.one ~all` | — | OFF |
 | TXT | `_dmarc` | `v=DMARC1; p=quarantine; rua=mailto:dmarc@iai.one; fo=1` | — | OFF |
@@ -165,8 +165,8 @@
 
 ## Checklist sau khi add DNS xong
 
-- [ ] PTR record trên Hetzner: `5.223.19.241` → `mail.iai.one`
-- [ ] A record `mail.iai.one` → `5.223.19.241` (proxy OFF)
+- [ ] PTR record trên Hetzner: `89.167.116.167` → `mail.iai.one`
+- [ ] A record `mail.iai.one` → `89.167.116.167` (proxy OFF)
 - [ ] MX record cho tất cả 12 domains
 - [ ] SPF record cho tất cả 12 domains
 - [ ] DMARC record cho tất cả 12 domains

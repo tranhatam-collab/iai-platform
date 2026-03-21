@@ -10,7 +10,7 @@
 #    ./dns-records.sh tranhatam.net    # for additional domain
 # ═══════════════════════════════════════════════════════════════
 
-VPS_IP="${VPS_IP:-5.223.19.241}"  # export VPS_IP=1.2.3.4 before running
+VPS_IP="${VPS_IP:-89.167.116.167}"  # export VPS_IP=1.2.3.4 before running
 DOMAIN="${1:-iai.one}"
 
 echo ""

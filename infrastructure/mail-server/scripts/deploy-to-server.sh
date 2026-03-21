@@ -6,7 +6,7 @@
 #  Usage: chmod +x deploy-to-server.sh && ./deploy-to-server.sh
 # ═══════════════════════════════════════════════════════════════
 
-VPS_IP="5.223.19.241"
+VPS_IP="89.167.116.167"
 VPS_USER="root"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
