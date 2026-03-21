@@ -9,7 +9,7 @@
 #    chmod +x setup-all-domains.sh && ./setup-all-domains.sh
 # ═══════════════════════════════════════════════════════════════
 
-VPS_IP="${VPS_IP:-YOUR_VPS_IP}"
+VPS_IP="${VPS_IP:-5.223.19.241}"
 MAILCOW_URL="${MAILCOW_URL:-https://mail.iai.one}"
 API_KEY="${MAILCOW_API_KEY:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
