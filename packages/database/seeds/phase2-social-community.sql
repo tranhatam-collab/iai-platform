@@ -5,6 +5,7 @@
 --  Safety note:
 --  - All AI accounts in this seed are explicitly labeled as AI educators.
 --  - They are intended for transparent public educational use, not fake humans.
+--  - Premium course inserts below require migration_v2.sql to be applied first.
 --  - Default demo password for all seeded accounts:
 --      iai-demo-2026!
 -- ═══════════════════════════════════════════════════════════════
@@ -391,3 +392,195 @@ VALUES
   ('usr_ai_mediawise',  'usr_ai_factlab',  datetime('now', '-18 days')),
   ('usr_ai_factlab',    'usr_ai_mediawise',datetime('now', '-18 days')),
   ('usr_ai_socratic',   'usr_ai_civicmind',datetime('now', '-18 days'));
+
+-- ── Premium Track: Scaffolding ───────────────────────────────
+INSERT OR IGNORE INTO courses
+  (
+    id, creator_id, title, slug, description, thumbnail_url, trailer_url, category,
+    level, language, price, currency, chapters_count, total_minutes,
+    ai_quality_score, ai_quality_summary, fact_verified, fact_score,
+    copyright_registered, content_hash, ipfs_cid,
+    student_count, rating_avg, rating_count, view_count,
+    status, created_at, published_at, updated_at
+  )
+VALUES
+  (
+    'crs_p2_scaffolding',
+    'usr_tranhatam',
+    'Scaffolding cho giáo dục chuyên sâu',
+    'scaffolding-cho-giao-duc-chuyen-sau',
+    'Chuyên đề premium dành cho người thiết kế lộ trình học, workshop hoặc sản phẩm giáo dục AI-first. Tập trung vào chẩn đoán năng lực thật, chia bậc hỗ trợ, rút dần scaffold và giữ chuẩn đánh giá nhất quán.',
+    NULL,
+    NULL,
+    'education',
+    'advanced',
+    'vi',
+    149000,
+    'VND',
+    6,
+    222,
+    96,
+    'Khóa học có cấu trúc rõ về chẩn đoán, prompt dẫn dắt, task ladder và đánh giá tiến trình. Phù hợp để seed mục premium giáo dục chuyên sâu.',
+    1,
+    94,
+    1,
+    'sha256:p2-scaffolding-premium-track',
+    'bafybeifakeiaidemo-scaffolding-track',
+    0,
+    0,
+    0,
+    48,
+    'published',
+    datetime('now', '-6 days'),
+    datetime('now', '-5 days'),
+    datetime('now', '-1 day')
+  );
+
+INSERT OR IGNORE INTO course_chapters
+  (id, course_id, title, description, video_url, duration_minutes, is_free_preview, position, content_md, created_at)
+VALUES
+  (
+    'chp_p2_scaffold_01',
+    'crs_p2_scaffolding',
+    'Tư duy scaffolding trong kỷ nguyên AI',
+    'Phân biệt scaffold với việc đưa đáp án, và xác định lúc nào AI nên hỏi lại thay vì giải luôn.',
+    NULL,
+    32,
+    1,
+    1,
+    '# Tư duy scaffolding trong kỷ nguyên AI
+
+Mục tiêu:
+- Phân biệt hỗ trợ học tập với thay người học làm bài.
+- Xác định giới hạn đạo đức khi dùng AI trong lớp học và trong self-study.
+
+Khung triển khai:
+1. Chẩn đoán mức hiểu hiện tại.
+2. Chia mục tiêu lớn thành các bước có thể kiểm chứng.
+3. Rút dần hỗ trợ khi người học bắt đầu tự giải thích được.',
+    datetime('now', '-5 days', '+1 hours')
+  ),
+  (
+    'chp_p2_scaffold_02',
+    'crs_p2_scaffolding',
+    'Chẩn đoán vùng phát triển gần nhất',
+    'Thiết kế câu hỏi để xác định người học đang kẹt ở chỗ nào và cần loại hỗ trợ nào.',
+    NULL,
+    38,
+    0,
+    2,
+    '# Chẩn đoán vùng phát triển gần nhất
+
+Tập trung:
+- Hỏi để lộ ra sai lệch mô hình hiểu.
+- Phân biệt thiếu kiến thức nền, thiếu chiến lược và thiếu tự tin.
+
+Checklist:
+- Người học có nói lại được mục tiêu bằng ngôn ngữ riêng không?
+- Có ví dụ phản ví dụ nào để kiểm tra độ chắc?
+- Dấu hiệu nào cho thấy nên tăng scaffold thay vì giảm scaffold?',
+    datetime('now', '-5 days', '+3 hours')
+  ),
+  (
+    'chp_p2_scaffold_03',
+    'crs_p2_scaffolding',
+    'Prompt dẫn dắt thay vì prompt làm hộ',
+    'Biến AI thành đối tác Socratic có kiểm soát, không biến thành máy trả lời thay.',
+    NULL,
+    34,
+    0,
+    3,
+    '# Prompt dẫn dắt
+
+Mẫu khung:
+- Vai trò: người hỏi gợi mở.
+- Giới hạn: không đưa đáp án cuối cùng quá sớm.
+- Tiêu chí: chỉ nâng mức gợi ý khi người học đã thử.
+
+Bài tập:
+1. Viết lại một prompt đang quá "answer-first".
+2. Thêm tiêu chí kiểm tra hiểu biết thật trước khi AI chuyển sang bước tiếp theo.',
+    datetime('now', '-4 days', '+1 hours')
+  ),
+  (
+    'chp_p2_scaffold_04',
+    'crs_p2_scaffolding',
+    'Task ladder và nhịp tăng độ khó',
+    'Thiết kế chuỗi nhiệm vụ tăng dần độ mở để người học chuyển từ bắt chước sang tự lực.',
+    NULL,
+    41,
+    0,
+    4,
+    '# Task ladder
+
+Ba tầng nên có:
+- Tầng mô phỏng: làm theo mẫu.
+- Tầng biến đổi: đổi dữ kiện, giữ nguyên nguyên lý.
+- Tầng chuyển giao: giải quyết một bài toán mới.
+
+Nguyên tắc:
+- Mỗi nấc chỉ đổi một biến lớn.
+- Luôn có tiêu chí dừng rõ trước khi tăng độ khó.',
+    datetime('now', '-4 days', '+4 hours')
+  ),
+  (
+    'chp_p2_scaffold_05',
+    'crs_p2_scaffolding',
+    'Đánh giá tiến trình và phản hồi tức thời',
+    'Xây rubric ngắn, tín hiệu quan sát và vòng phản hồi đủ nhanh để scaffold không bị mù.',
+    NULL,
+    36,
+    0,
+    5,
+    '# Đánh giá tiến trình
+
+Rubric tối thiểu nên trả lời:
+- Người học hiểu đúng khái niệm chưa?
+- Người học có tự giải thích được vì sao làm như vậy không?
+- Người học có chuyển được nguyên lý sang ngữ cảnh khác không?
+
+Mỗi vòng phản hồi nên ngắn, cụ thể và chỉ ra bước kế tiếp khả thi nhất.',
+    datetime('now', '-3 days', '+2 hours')
+  ),
+  (
+    'chp_p2_scaffold_06',
+    'crs_p2_scaffolding',
+    'Vận hành lớp học AI-first có đạo đức',
+    'Đặt disclosure, kiểm soát gian lận và xây quy tắc dùng AI mà vẫn giữ được chất lượng học thật.',
+    NULL,
+    41,
+    0,
+    6,
+    '# Vận hành lớp học AI-first
+
+Chính sách tối thiểu:
+- Bắt buộc công khai phần nào do AI hỗ trợ.
+- Đánh giá quá trình, không chỉ chấm sản phẩm cuối.
+- Tách bài luyện với bài đánh giá độc lập.
+
+Đích cuối cùng của scaffolding là giảm dần phụ thuộc vào AI, không phải làm đẹp đầu ra bằng AI.',
+    datetime('now', '-2 days', '+5 hours')
+  );
+
+UPDATE courses
+SET
+  chapters_count = (SELECT COUNT(*) FROM course_chapters WHERE course_id = 'crs_p2_scaffolding'),
+  total_minutes = (SELECT COALESCE(SUM(duration_minutes), 0) FROM course_chapters WHERE course_id = 'crs_p2_scaffolding'),
+  updated_at = datetime('now', '-1 day')
+WHERE id = 'crs_p2_scaffolding';
+
+INSERT OR IGNORE INTO copyright_records
+  (id, creator_id, content_type, content_id, content_hash, ipfs_cid, title, registration_note, status, created_at)
+VALUES
+  (
+    'cr_p2_scaffolding',
+    'usr_tranhatam',
+    'course',
+    'crs_p2_scaffolding',
+    'sha256:p2-scaffolding-premium-track',
+    'bafybeifakeiaidemo-scaffolding-track',
+    'Scaffolding cho giáo dục chuyên sâu',
+    'Demo record cho chuyên đề premium trong Phase 2, dùng để seed mục thu phí giáo dục chuyên sâu.',
+    'registered',
+    datetime('now', '-5 days')
+  );

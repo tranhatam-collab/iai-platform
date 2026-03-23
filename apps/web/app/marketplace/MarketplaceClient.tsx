@@ -31,6 +31,13 @@ const SORT_OPTIONS: { id: SortOption; label: string }[] = [
   { id: 'price_asc', label: 'Giá thấp → cao' },
 ]
 
+const FEATURED_PREMIUM_TRACK = {
+  title: 'Scaffolding cho giáo dục chuyên sâu',
+  description:
+    'Dành cho educator, builder và team đang thiết kế hành trình học AI-first nhưng vẫn giữ được nhịp dẫn dắt, chẩn đoán và rút dần hỗ trợ theo năng lực thật.',
+  topics: ['ZPD & chẩn đoán', 'Prompt dẫn dắt', 'Task ladder', 'Đánh giá tiến trình'],
+}
+
 // ── Fetcher ───────────────────────────────────────────────────
 async function fetcher(url: string) {
   const res = await fetch(url)
@@ -79,9 +86,13 @@ export function MarketplaceClient() {
 
   // Build query string
   const params = new URLSearchParams()
-  if (category !== 'all')       params.set('category', category)
-  if (typeFilter !== 'all')     params.set('type', typeFilter)
-  if (sort !== 'newest')        params.set('sort', sort)
+  if (category !== 'all') params.set('category', category)
+  if (typeFilter === 'course' || typeFilter === 'document') params.set('type', typeFilter)
+  if (typeFilter === 'free') params.set('free', '1')
+  if (typeFilter === 'premium') params.set('free', '0')
+  if (sort === 'popular') params.set('sort', 'students')
+  if (sort === 'top_rated') params.set('sort', 'rating')
+  if (sort === 'price_asc') params.set('sort', sort)
 
   const apiUrl = `/api/v1/marketplace?${params.toString()}`
 
@@ -92,6 +103,11 @@ export function MarketplaceClient() {
   )
 
   const items = data?.items ?? []
+  const focusScaffoldingTrack = () => {
+    setCategory('education')
+    setTypeFilter('premium')
+    setSort('top_rated')
+  }
 
   return (
     <div className="min-h-screen bg-obsidian">
@@ -103,37 +119,66 @@ export function MarketplaceClient() {
         <div className="absolute inset-0 bg-gradient-to-b from-obsidian via-obsidian-mid/50 to-obsidian pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 py-14 sm:py-20">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="badge badge-gold font-mono text-[10px]">✦ MARKETPLACE</span>
-              <span className="badge badge-cyan text-[10px]">AI KIỂM CHỨNG</span>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] items-end">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="badge badge-gold font-mono text-[10px]">✦ MARKETPLACE</span>
+                <span className="badge badge-cyan text-[10px]">AI KIỂM CHỨNG</span>
+              </div>
+
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white mb-4 leading-tight">
+                Kho Tri Thức{' '}
+                <span className="text-gradient-gold">IAI</span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-white/50 leading-relaxed max-w-xl">
+                Khóa học, tài liệu và chuyên đề premium cho người học muốn đi từ hiểu biết cơ bản
+                sang năng lực thiết kế, dẫn dắt và triển khai giáo dục thật.
+              </p>
+
+              {/* Quick stats */}
+              <div className="flex flex-wrap gap-6 mt-8">
+                {[
+                  { label: 'Khóa học', value: '200+', color: 'text-gold' },
+                  { label: 'Tài liệu',  value: '1K+',  color: 'text-jade' },
+                  { label: 'Người học', value: '50K+', color: 'text-cyan-iai' },
+                  { label: 'Giảng viên', value: '500+', color: 'text-gold-light' },
+                ].map(stat => (
+                  <div key={stat.label}>
+                    <div className={cn('font-serif text-2xl font-bold', stat.color)}>
+                      {stat.value}
+                    </div>
+                    <div className="text-xs text-white/30 font-mono mt-0.5">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-white mb-4 leading-tight">
-              Kho Tri Thức{' '}
-              <span className="text-gradient-gold">IAI</span>
-            </h1>
+            <div className="rounded-3xl border border-gold/20 bg-white/[0.04] p-5 sm:p-6 shadow-gold-sm backdrop-blur-sm">
+              <p className="text-[10px] font-mono tracking-[0.24em] text-gold/75">
+                CHUYÊN ĐỀ THU PHÍ
+              </p>
+              <h2 className="font-serif text-2xl text-white mt-2 leading-tight">
+                {FEATURED_PREMIUM_TRACK.title}
+              </h2>
+              <p className="text-sm text-white/50 leading-relaxed mt-3">
+                {FEATURED_PREMIUM_TRACK.description}
+              </p>
 
-            <p className="text-base sm:text-lg text-white/50 leading-relaxed max-w-xl">
-              Khóa học và tài liệu chất lượng cao, được AI kiểm chứng nội dung,
-              bảo vệ bản quyền on-chain. Học bất cứ đâu, bất cứ lúc nào.
-            </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {FEATURED_PREMIUM_TRACK.topics.map(topic => (
+                  <span
+                    key={topic}
+                    className="px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[11px] font-mono text-white/60"
+                  >
+                    {topic}
+                  </span>
+                ))}
+              </div>
 
-            {/* Quick stats */}
-            <div className="flex flex-wrap gap-6 mt-8">
-              {[
-                { label: 'Khóa học', value: '200+', color: 'text-gold' },
-                { label: 'Tài liệu',  value: '1K+',  color: 'text-jade' },
-                { label: 'Người học', value: '50K+', color: 'text-cyan-iai' },
-                { label: 'Giảng viên', value: '500+', color: 'text-gold-light' },
-              ].map(stat => (
-                <div key={stat.label}>
-                  <div className={cn('font-serif text-2xl font-bold', stat.color)}>
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-white/30 font-mono mt-0.5">{stat.label}</div>
-                </div>
-              ))}
+              <button onClick={focusScaffoldingTrack} className="btn btn-gold w-full mt-5">
+                Xem chuyên đề Scaffolding
+              </button>
             </div>
           </div>
         </div>

@@ -19,8 +19,8 @@ export async function handleMarketplace(
     const offset   = Number(url.searchParams.get('offset') ?? 0)
     const category = url.searchParams.get('category')
     const type     = url.searchParams.get('type')        // course|document|all
-    const free     = url.searchParams.get('free')
-    const sort     = url.searchParams.get('sort') ?? 'latest' // latest|rating|students|price_asc
+    const free     = url.searchParams.get('free')        // 1 = free, 0 = premium
+    const sort     = url.searchParams.get('sort') ?? 'latest' // latest|newest|rating|top_rated|students|popular|price_asc
     const q        = url.searchParams.get('q')
 
     const items: unknown[] = []
@@ -37,6 +37,7 @@ export async function handleMarketplace(
       const cBinds: unknown[] = []
       if (category) { courseQ += ' AND c.category = ?'; cBinds.push(category) }
       if (free === '1') { courseQ += ' AND c.price = 0' }
+      if (free === '0') { courseQ += ' AND c.price > 0' }
       if (q) { courseQ += ' AND (c.title LIKE ? OR c.description LIKE ?)'; cBinds.push(`%${q}%`, `%${q}%`) }
 
       const courses = await env.DB.prepare(courseQ).bind(...cBinds).all()
@@ -56,6 +57,7 @@ export async function handleMarketplace(
       const dBinds: unknown[] = []
       if (category) { docQ += ' AND d.category = ?'; dBinds.push(category) }
       if (free === '1') { docQ += ' AND d.price = 0' }
+      if (free === '0') { docQ += ' AND d.price > 0' }
       if (q) { docQ += ' AND (d.title LIKE ? OR d.description LIKE ?)'; dBinds.push(`%${q}%`, `%${q}%`) }
 
       const docs = await env.DB.prepare(docQ).bind(...dBinds).all()
@@ -65,8 +67,8 @@ export async function handleMarketplace(
     // Sort combined
     type Item = { rating_avg?: number; student_count?: number; price?: number; created_at?: string }
     const sorted = items.sort((a: Item, b: Item) => {
-      if (sort === 'rating')    return (b.rating_avg ?? 0) - (a.rating_avg ?? 0)
-      if (sort === 'students')  return (b.student_count ?? 0) - (a.student_count ?? 0)
+      if (sort === 'rating' || sort === 'top_rated') return (b.rating_avg ?? 0) - (a.rating_avg ?? 0)
+      if (sort === 'students' || sort === 'popular') return (b.student_count ?? 0) - (a.student_count ?? 0)
       if (sort === 'price_asc') return (a.price ?? 0) - (b.price ?? 0)
       return new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
     })

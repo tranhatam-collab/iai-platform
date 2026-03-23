@@ -145,6 +145,7 @@ export const CATEGORIES: CategoryConfig[] = [
   { id: 'business',     label: 'Kinh doanh',     icon: '📈', color: 'text-jade' },
   { id: 'art',          label: 'Nghệ thuật',     icon: '🎨', color: 'text-purple-400' },
   { id: 'science',      label: 'Khoa học',       icon: '🔬', color: 'text-blue-400' },
+  { id: 'education',    label: 'Giáo dục',       icon: '🧩', color: 'text-cyan-200' },
   { id: 'language',     label: 'Ngôn ngữ',       icon: '🌐', color: 'text-amber-400' },
   { id: 'personal_dev', label: 'Phát triển bản thân', icon: '🧠', color: 'text-gold-light' },
   { id: 'finance',      label: 'Tài chính',      icon: '💰', color: 'text-jade-light' },
