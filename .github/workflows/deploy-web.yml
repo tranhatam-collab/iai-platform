@@ -23,16 +23,15 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: apps/web
+      - name: Install root dependencies
+        run: npm install --legacy-peer-deps
 
       - name: Type check
         run: npm run typecheck
         working-directory: apps/web
 
-      - name: Build Next.js
-        run: npm run build
+      - name: Build Next on Pages bundle
+        run: npm run build:cf
         working-directory: apps/web
         env:
           NEXT_PUBLIC_API_URL:  ${{ secrets.NEXT_PUBLIC_API_URL || 'https://api.iai.one' }}
@@ -45,7 +44,7 @@ jobs:
         with:
           apiToken:      ${{ secrets.CF_API_TOKEN }}
           accountId:     ${{ secrets.CF_ACCOUNT_ID }}
-          projectName:   iai-web
-          directory:     apps/web/.next
+          projectName:   app-iai-one
+          directory:     apps/web/.vercel/output/static
           gitHubToken:   ${{ secrets.GITHUB_TOKEN }}
           branch:        ${{ github.ref_name }}
