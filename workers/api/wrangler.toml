@@ -41,8 +41,8 @@ workers_dev = false
 vars = { IAI_ENV = "production", ALLOWED_ORIGINS = "https://app.iai.one,https://www.app.iai.one,https://iai.one,https://www.iai.one,https://ai.muonnoi.org", N8N_BASE_URL = "https://flows.iai.one", SELF_URL = "https://api.iai.one", APP_URL = "https://app.iai.one" }
 
 [[env.production.routes]]
-pattern = "api.iai.one/*"
-zone_name = "iai.one"
+pattern = "api.iai.one"
+custom_domain = true
 
 [[env.production.d1_databases]]
 binding       = "DB"
