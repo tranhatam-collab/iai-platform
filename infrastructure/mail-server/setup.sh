@@ -102,6 +102,7 @@ SMTP_HOST=localhost
 SMTP_PORT=587
 SMTP_USER=api@iai.one
 SMTP_PASS=CHANGE_AFTER_MAILCOW_SETUP
+MAIL_DOCS_URL=https://docs.iai.one/mail/
 ENV
 
 cd /opt/iai-mail-api

@@ -13,6 +13,7 @@ const nodemailer = require('nodemailer')
 
 const app  = express()
 app.use(express.json({ limit: '5mb' }))
+const MAIL_DOCS_URL = process.env.MAIL_DOCS_URL ?? 'https://docs.iai.one/mail/'
 
 // ── SMTP transport (connects to local Mailcow) ───────────────
 let transporter = null
@@ -145,7 +146,27 @@ app.get('/health', (req, res) => {
     ok:      true,
     service: 'IAI Mail API',
     smtp:    `${process.env.SMTP_HOST}:${process.env.SMTP_PORT}`,
+    docs:    MAIL_DOCS_URL,
     ts:      new Date().toISOString(),
+  })
+})
+
+// ── GET /help — Docs entry for API operators ──────────────────
+app.get('/help', (req, res) => {
+  const wantsHtml = (req.headers.accept ?? '').includes('text/html')
+  if (wantsHtml) {
+    return res.redirect(302, MAIL_DOCS_URL)
+  }
+
+  res.json({
+    ok: true,
+    docs: MAIL_DOCS_URL,
+    endpoints: {
+      send: '/emails',
+      batch: '/emails/batch',
+      domains: '/domains',
+      health: '/health',
+    },
   })
 })
 
