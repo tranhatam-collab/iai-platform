@@ -123,6 +123,7 @@ export function MarketplaceClient() {
             <div className="max-w-2xl">
               <div className="flex items-center gap-2 mb-4">
                 <span className="badge badge-gold font-mono text-[10px]">✦ MARKETPLACE</span>
+                <span className="badge badge-cyan text-[10px]">V3.0</span>
                 <span className="badge badge-cyan text-[10px]">AI KIỂM CHỨNG</span>
               </div>
 

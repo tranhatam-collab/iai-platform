@@ -56,6 +56,31 @@ export async function handleUsers(
   const JC      = (d: unknown, token: string | null, s = 200) =>
     jsonWithCookie(d, token, s, origin, env.ALLOWED_ORIGINS ?? '*')
 
+  // ── GET /v1/users — public profile index ──────────────────
+  if (path === '/v1/users' && request.method === 'GET') {
+    const url = new URL(request.url)
+    const limit = Math.min(Number(url.searchParams.get('limit') ?? 50), 100)
+    const cursor = url.searchParams.get('cursor')
+
+    let q = `
+      SELECT handle, name, bio, avatar_url, trust_score, edu_level, verified, created_at, updated_at
+      FROM users
+      WHERE 1 = 1
+    `
+    const binds: unknown[] = []
+
+    if (cursor) {
+      q += ' AND created_at < ?'
+      binds.push(cursor)
+    }
+
+    q += ' ORDER BY created_at DESC LIMIT ?'
+    binds.push(limit)
+
+    const users = await env.DB.prepare(q).bind(...binds).all()
+    return J({ ok: true, users: users.results, cursor: users.results.at(-1)?.created_at ?? null })
+  }
+
   // ── POST /v1/users/register ───────────────────────────────
   // Body: { handle, email, name? }
   // Creates unverified account, sends verification email
