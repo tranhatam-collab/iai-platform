@@ -19,15 +19,20 @@ let transporter = null
 
 function getTransport() {
   if (!transporter) {
-    transporter = nodemailer.createTransport({
+    const transport = {
       host:   process.env.SMTP_HOST ?? 'localhost',
       port:   Number(process.env.SMTP_PORT ?? 587),
       secure: process.env.SMTP_SECURE === 'true',
-      auth: {
+      tls: { rejectUnauthorized: false }, // allow self-signed / internal hops
+    }
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+      transport.auth = {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
-      },
-      tls: { rejectUnauthorized: false }, // allow self-signed for localhost
+      }
+    }
+    transporter = nodemailer.createTransport({
+      ...transport,
     })
   }
   return transporter
@@ -157,7 +162,8 @@ app.get('/domains', auth, (req, res) => {
 
 // ── Start ─────────────────────────────────────────────────────
 const PORT = process.env.PORT ?? 3000
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`IAI Mail API running on 127.0.0.1:${PORT}`)
+const HOST = process.env.HOST ?? '0.0.0.0'
+app.listen(PORT, HOST, () => {
+  console.log(`IAI Mail API running on ${HOST}:${PORT}`)
   console.log(`SMTP: ${process.env.SMTP_HOST}:${process.env.SMTP_PORT} (${process.env.SMTP_USER})`)
 })

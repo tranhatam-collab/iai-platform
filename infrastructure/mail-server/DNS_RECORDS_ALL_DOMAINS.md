@@ -5,6 +5,12 @@
 
 > **Quan trọng:** Record `A mail.iai.one` phải để Proxy = **OFF** (grey cloud) trong Cloudflare
 > vì cổng 25 (SMTP) **không qua** Cloudflare proxy.
+>
+> API path `https://mail.iai.one/_mail/emails` cũng đi **thẳng vào origin** trên cùng hostname này.
+> Không dùng Cloudflare path routing cho `mail.iai.one`; `/_mail/*` được Mailcow nginx proxy nội bộ.
+
+> **Chỉ giữ 1 SPF record cho mỗi domain.**
+> Tuyệt đối không thêm record DMARC ở root domain; DMARC chỉ đặt ở `_dmarc.<domain>`.
 
 ---
 
@@ -27,7 +33,7 @@
 | TXT | `_dmarc` | `v=DMARC1; p=quarantine; rua=mailto:dmarc@iai.one; fo=1` | — | OFF |
 | CNAME | `autoconfig` | `mail.iai.one` | — | OFF |
 | CNAME | `autodiscover` | `mail.iai.one` | — | OFF |
-| TXT | `dkim._domainkey` | *(lấy từ Mailcow sau khi setup)* | — | OFF |
+| TXT | `dkim._domainkey` | *(lấy từ Mailcow API `GET /api/v1/get/dkim/<domain>` sau khi setup)* | — | OFF |
 
 ---
 
@@ -171,6 +177,6 @@
 - [ ] SPF record cho tất cả 12 domains
 - [ ] DMARC record cho tất cả 12 domains
 - [ ] SSH vào server, chạy setup.sh
-- [ ] Login Mailcow, tạo DKIM cho từng domain
+- [ ] Lấy DKIM public key đã được Mailcow tạo sẵn cho từng domain
 - [ ] Thêm DKIM TXT records vào DNS
 - [ ] Test: https://mail-tester.com (gửi email đến địa chỉ test → phải đạt 9-10/10)

@@ -18,7 +18,7 @@ export type EmailPayload = {
 }
 
 type EmailEnv = {
-  MAIL_API_URL?:  string   // e.g. https://mail.iai.one/api
+  MAIL_API_URL?:  string   // e.g. https://mail.iai.one/_mail
   MAIL_API_KEY?:  string   // IAI Mail API key
   RESEND_API_KEY?: string  // fallback
 }

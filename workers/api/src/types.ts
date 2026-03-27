@@ -24,7 +24,7 @@ export type Bindings = {
   APP_URL:               string
 
   // Email — self-hosted IAI Mail API (primary) or Resend (fallback)
-  MAIL_API_URL?:         string   // e.g. https://mail.iai.one/api
+  MAIL_API_URL?:         string   // e.g. https://mail.iai.one/_mail
   MAIL_API_KEY?:         string   // secret key for IAI Mail API
   RESEND_API_KEY?:       string   // fallback if self-hosted not ready
 
