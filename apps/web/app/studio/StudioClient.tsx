@@ -46,36 +46,34 @@ const STUDIO_TOOLS = [
     icon:  '⬡',
     name:  'IAI Chain',
     label: 'IPFS & Blockchain',
-    desc:  'Pin nội dung đã kiểm chứng lên IPFS. Anchor lên Polygon (Phase 3).',
+    desc:  'Pin nội dung đã kiểm chứng lên IPFS và chuẩn bị anchor lên Polygon qua lớp tài sản kiểm chứng của nft.iai.one.',
     href:  '#',
     color: 'from-purple-500/20 to-purple-500/5',
-    badge: 'Phase 3 · Coming',
+    badge: 'Phase 3 · Q1 2026',
     badgeColor: 'badge-opinion',
     disabled: true,
   },
   {
     id:    'nft',
     icon:  '◇',
-    name:  'Knowledge NFT',
-    label: 'Mint NFT Kiến Thức',
-    desc:  'Bài học chất lượng cao → Knowledge NFT. Tác giả giữ quyền sở hữu vĩnh viễn.',
-    href:  '#',
+    name:  'IAI Proof Assets',
+    label: 'nft.iai.one',
+    desc:  'Lớp tài sản kiểm chứng cho app.iai.one: Knowledge NFT, metadata, disclosure, verify proofs và issuance surface.',
+    href:  'https://nft.iai.one',
     color: 'from-amber-500/20 to-amber-500/5',
-    badge: 'Phase 3 · Coming',
+    badge: 'NFT Proof Layer',
     badgeColor: 'badge-disputed',
-    disabled: true,
   },
   {
     id:    'n8n',
     icon:  '⟡',
     name:  'IAI Flow',
     label: 'Automation (n8n)',
-    desc:  'Tự động hóa workflow: auto post, fact-check, notify, và hơn thế nữa.',
-    href:  '#',
+    desc:  'Tự động hóa workflow cho post, fact-check, notify, marketplace sync và orchestration qua flow.iai.one.',
+    href:  'https://flow.iai.one',
     color: 'from-white/10 to-white/5',
-    badge: 'Phase 2 · Planned',
+    badge: 'Phase 2 · Q4 2025',
     badgeColor: 'badge-unverified',
-    disabled: true,
   },
 ]
 
@@ -88,13 +86,14 @@ export function StudioClient() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-3">
           <span className="badge badge-gold font-mono text-[10px]">⟡ IAI STUDIO</span>
+          <span className="badge badge-cyan text-[10px]">V3.0</span>
         </div>
         <h1 className="font-serif text-2xl sm:text-3xl text-white mb-3">
           Xưởng Sáng Tạo AI
         </h1>
         <p className="text-sm text-white/45 max-w-xl leading-relaxed">
           Tất cả công cụ AI của IAI trong một chỗ — tạo bài học, kiểm chứng nội dung,
-          quản lý tác phẩm và kết nối với blockchain.
+          quản lý tác phẩm, phối hợp marketplace, automation và kết nối lớp tài sản kiểm chứng tại nft.iai.one.
         </p>
       </div>
 
@@ -202,6 +201,11 @@ export function StudioClient() {
                   </li>
                 ))}
               </ul>
+              {p.phase === 'Phase 3' && (
+                <div className="mt-2 text-[11px] text-white/30">
+                  nft.iai.one = lớp tài sản kiểm chứng của app
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -37,7 +37,14 @@ export async function handleCourses(
     const free     = url.searchParams.get('free')
     const sort     = url.searchParams.get('sort') ?? 'created_at'
 
-    const sortCol = ({ rating: 'c.rating_avg', students: 'c.student_count', price_asc: 'c.price' } as Record<string,string>)[sort] ?? 'c.created_at'
+    const sortCol = ({
+      rating: 'c.rating_avg',
+      top_rated: 'c.rating_avg',
+      students: 'c.student_count',
+      popular: 'c.student_count',
+      price_asc: 'c.price',
+    } as Record<string, string>)[sort] ?? 'c.created_at'
+    const sortDir = sort === 'price_asc' ? 'ASC' : 'DESC'
 
     let q = `SELECT c.*, u.handle, u.name, u.avatar_url
              FROM courses c JOIN users u ON c.creator_id = u.id
@@ -47,7 +54,8 @@ export async function handleCourses(
     if (category) { q += ' AND c.category = ?'; binds.push(category) }
     if (level)    { q += ' AND c.level = ?';    binds.push(level) }
     if (free === '1') { q += ' AND c.price = 0' }
-    q += ` ORDER BY ${sortCol} DESC LIMIT ? OFFSET ?`
+    if (free === '0') { q += ' AND c.price > 0' }
+    q += ` ORDER BY ${sortCol} ${sortDir} LIMIT ? OFFSET ?`
     binds.push(limit, offset)
 
     const rows = await env.DB.prepare(q).bind(...binds).all()
@@ -68,7 +76,23 @@ export async function handleCourses(
       'SELECT * FROM course_chapters WHERE course_id = ? ORDER BY position ASC'
     ).bind((course as { id: string }).id).all()
 
-    return J({ ok: true, course, chapters: chapters.results })
+    const reviews = await env.DB.prepare(
+      `SELECT r.*, u.handle, u.name, u.avatar_url
+       FROM reviews r JOIN users u ON r.user_id = u.id
+       WHERE r.course_id = ?
+       ORDER BY r.created_at DESC`
+    ).bind((course as { id: string }).id).all()
+
+    let purchased = Number((course as { price?: number }).price ?? 0) === 0
+    const user = await requireAuth(request, env)
+    if (!purchased && user) {
+      const purchase = await env.DB.prepare(
+        "SELECT id FROM purchases WHERE user_id = ? AND course_id = ? AND status = 'completed'"
+      ).bind(user.id, (course as { id: string }).id).first()
+      purchased = !!purchase
+    }
+
+    return J({ ok: true, course, chapters: chapters.results, reviews: reviews.results, purchased })
   }
 
   // ── POST /v1/courses — create course ─────────────────────────

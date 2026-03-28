@@ -17,28 +17,38 @@ export async function handlePosts(request: Request, env: Bindings, path: string)
     const limit  = Math.min(parseInt(url.searchParams.get('limit') ?? '20'), 50)
     const cursor = url.searchParams.get('cursor') ?? null
 
-    let query: string
+    const whereParts: string[] = []
     switch (tab) {
-      case 'verified': query = "WHERE p.fact_status = 'verified'"; break
-      case 'lesson':   query = "WHERE p.type = 'lesson'"; break
-      case 'debate':   query = "WHERE p.type = 'debate'"; break
-      case 'chain':    query = "WHERE p.chain_tx_hash IS NOT NULL"; break
-      default:         query = ''; break  // hot: all posts
+      case 'latest':   break
+      case 'verified': whereParts.push("p.fact_status = 'verified'"); break
+      case 'lesson':   whereParts.push("p.type = 'lesson'"); break
+      case 'debate':   whereParts.push("p.type = 'debate'"); break
+      case 'chain':    whereParts.push('p.chain_tx_hash IS NOT NULL'); break
+      default:         break  // hot: all posts
     }
 
-    const cursorClause = cursor ? `AND p.created_at < '${cursor}'` : ''
+    const binds: unknown[] = []
+    if (cursor) {
+      whereParts.push('p.created_at < ?')
+      binds.push(cursor)
+    }
+
     const orderClause  = tab === 'hot'
       ? 'ORDER BY (p.like_count * 2 + p.comment_count) DESC, p.created_at DESC'
       : 'ORDER BY p.created_at DESC'
 
-    const posts = await env.DB.prepare(`
+    let sql = `
       SELECT p.*, u.handle, u.name, u.avatar_url, u.trust_score
       FROM posts p
       JOIN users u ON u.id = p.user_id
-      ${query} ${cursorClause}
-      ${orderClause}
-      LIMIT ?
-    `).bind(limit).all()
+    `
+    if (whereParts.length > 0) {
+      sql += ` WHERE ${whereParts.join(' AND ')}`
+    }
+    sql += ` ${orderClause} LIMIT ?`
+    binds.push(limit)
+
+    const posts = await env.DB.prepare(sql).bind(...binds).all()
 
     return J({ ok: true, posts: posts.results, cursor: posts.results.at(-1)?.created_at ?? null })
   }
@@ -72,7 +82,7 @@ export async function handlePosts(request: Request, env: Bindings, path: string)
   }
 
   // ── GET /v1/posts/:id ─────────────────────────────────────
-  const match = path.match(/^\/v1\/posts\/([a-z0-9-]+)$/)
+  const match = path.match(/^\/v1\/posts\/([A-Za-z0-9_-]+)$/)
   if (match && request.method === 'GET') {
     const post = await env.DB.prepare(`
       SELECT p.*, u.handle, u.name, u.avatar_url, u.trust_score
@@ -87,7 +97,7 @@ export async function handlePosts(request: Request, env: Bindings, path: string)
   }
 
   // ── POST /v1/posts/:id/like ───────────────────────────────
-  const likeMatch = path.match(/^\/v1\/posts\/([a-z0-9-]+)\/like$/)
+  const likeMatch = path.match(/^\/v1\/posts\/([A-Za-z0-9_-]+)\/like$/)
   if (likeMatch && request.method === 'POST') {
     const user = await requireAuth(request, env)
     if (!user) return J({ ok: false, error: 'Unauthorized' }, 401)

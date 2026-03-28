@@ -5,20 +5,37 @@
 
 import type { Metadata } from 'next'
 import { MarketplaceClient } from './MarketplaceClient'
+import { absoluteUrl, jsonLd, pageMetadata } from '@/lib/seo'
 
 export const runtime = 'edge'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Kho Tri Thức IAI — Marketplace',
   description:
-    'Khóa học và tài liệu chất lượng cao, được AI kiểm chứng. Mua, học và chia sẻ tri thức trên nền tảng IAI.',
-  openGraph: {
-    title: 'Kho Tri Thức IAI',
-    description: 'Khóa học và tài liệu được kiểm chứng bởi AI. Học ngay trên IAI.',
-    type: 'website',
-  },
-}
+    'Khóa học, tài liệu và chuyên đề premium như Scaffolding cho người làm giáo dục chuyên sâu trên nền tảng IAI.',
+  path: '/marketplace',
+  keywords: ['marketplace', 'khóa học premium', 'scaffolding', 'tài liệu giáo dục'],
+})
 
 export default function MarketplacePage() {
-  return <MarketplaceClient />
+  const marketplaceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    name: 'IAI Marketplace',
+    url: absoluteUrl('/marketplace'),
+    description: metadata.description,
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Course', name: 'Scaffolding cho giáo dục chuyên sâu' } },
+    ],
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(marketplaceJsonLd) }}
+      />
+      <MarketplaceClient />
+    </>
+  )
 }

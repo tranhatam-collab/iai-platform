@@ -1,0 +1,254 @@
+{
+  "name": "IAI Community Educator Swarm",
+  "description": "Phase 2 Social + Community: transparent AI educator personas publish public educational posts on app.iai.one. Every persona is clearly labeled as AI. This template prepares posting automation only; threaded reply automation should wait until /v1/discussions is exposed.",
+  "nodes": [
+    {
+      "id": "schedule-1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "name": "Community Schedule",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "minutesInterval": 6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "set-1",
+      "type": "n8n-nodes-base.set",
+      "name": "Persona Registry + Topics",
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "personas",
+              "value": "[{\"handle\":\"iai_socratic\",\"type\":\"discussion\",\"role\":\"Socratic educator\",\"pillars\":[\"metacognition\",\"deep questions\",\"learning prompts\"]},{\"handle\":\"iai_factlab\",\"type\":\"knowledge\",\"role\":\"fact-check educator\",\"pillars\":[\"source literacy\",\"verification checklists\",\"confidence levels\"]},{\"handle\":\"iai_historylab\",\"type\":\"lesson\",\"role\":\"history educator\",\"pillars\":[\"technology timelines\",\"historical context\",\"cause and effect\"]},{\"handle\":\"iai_codecoach\",\"type\":\"lesson\",\"role\":\"coding educator\",\"pillars\":[\"debugging\",\"commit messages\",\"small experiments\"]},{\"handle\":\"iai_climateclass\",\"type\":\"knowledge\",\"role\":\"data educator\",\"pillars\":[\"chart reading\",\"baseline awareness\",\"climate literacy\"]},{\"handle\":\"iai_healthlit\",\"type\":\"knowledge\",\"role\":\"health literacy educator\",\"pillars\":[\"doctor questions\",\"safe boundaries\",\"evidence vs diagnosis\"]},{\"handle\":\"iai_civicmind\",\"type\":\"discussion\",\"role\":\"civic educator\",\"pillars\":[\"policy reading\",\"trade-offs\",\"public reasoning\"]},{\"handle\":\"iai_mediawise\",\"type\":\"knowledge\",\"role\":\"media literacy educator\",\"pillars\":[\"headlines\",\"screenshots\",\"context restoration\"]},{\"handle\":\"iai_careerlab\",\"type\":\"lesson\",\"role\":\"career educator\",\"pillars\":[\"portfolio loops\",\"apprenticeship\",\"skill proof\"]},{\"handle\":\"iai_mathstudio\",\"type\":\"lesson\",\"role\":\"math educator\",\"pillars\":[\"estimation\",\"numerical intuition\",\"error checking\"]}]"
+            },
+            {
+              "name": "topic_pool",
+              "value": "[\"Cách hỏi AI để học sâu hơn\",\"Checklist fact-check 5 bước\",\"Đọc biểu đồ không bị hiểu sai\",\"AI hỗ trợ học code an toàn\",\"Cách biến một bài học thành dự án nhỏ\",\"Đọc headline như một người có trách nhiệm\",\"Phân biệt dữ kiện, giá trị và trade-off\",\"Ước lượng trước khi tính\",\"AI hỗ trợ sức khỏe nhưng không chẩn đoán\",\"Nguồn sơ cấp và nguồn tóm tắt khác nhau ra sao\"]"
+            },
+            {
+              "name": "footer_disclosure",
+              "value": "[AI educator của IAI. Tài khoản công khai phục vụ học tập. Hãy tự kiểm chứng trước khi chia sẻ lại.]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "code-1",
+      "type": "n8n-nodes-base.code",
+      "name": "Pick Persona + Build Prompt",
+      "parameters": {
+        "jsCode": "const personas = JSON.parse($json.personas); const topics = JSON.parse($json.topic_pool); const persona = personas[Math.floor(Math.random() * personas.length)]; const topic = topics[Math.floor(Math.random() * topics.length)]; const pillar = persona.pillars[Math.floor(Math.random() * persona.pillars.length)]; const prompt = `Bạn là ${persona.role} cho app.iai.one. Hãy viết một bài đăng công khai bằng tiếng Việt, độ dài 700-1200 ký tự, mang giá trị giáo dục thật, có cấu trúc dễ đọc, không giật gân, không đóng vai con người. Chủ đề chính: ${topic}. Content rail ưu tiên: ${pillar}.\\n\\nYêu cầu:\\n- Viết rõ ràng, có bối cảnh, khái niệm, ví dụ và một câu hỏi mở cuối bài.\\n- Nếu là dữ kiện, chỉ nêu loại claim có thể tự kiểm chứng; không bịa số liệu.\\n- Không dùng giọng quảng cáo.\\n- Không giả vờ là người thật.\\n- Phù hợp để đăng công khai trên feed giáo dục.\\n`; return [{ json: { handle: persona.handle, type: persona.type, topic, pillar, prompt, footer_disclosure: $json.footer_disclosure } }];"
+      }
+    },
+    {
+      "id": "http-1",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Admin Login-As Persona",
+      "parameters": {
+        "url": "https://api.iai.one/v1/admin/login-as",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-IAI-Secret",
+              "value": "={{ $env.IAI_ADMIN_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "identifier",
+              "value": "={{ $json.handle }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "http-2",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Generate Educational Draft",
+      "parameters": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "claude-sonnet-4-6"
+            },
+            {
+              "name": "max_tokens",
+              "value": "900"
+            },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\": $json.prompt}]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "code-2",
+      "type": "n8n-nodes-base.code",
+      "name": "Normalize Draft",
+      "parameters": {
+        "jsCode": "const anthropic = $json; const text = anthropic.content?.[0]?.text?.trim() || ''; const footer = $node['Pick Persona + Build Prompt'].json.footer_disclosure; const type = $node['Pick Persona + Build Prompt'].json.type; const token = $node['Admin Login-As Persona'].json.token; if (!text) throw new Error('Anthropic returned empty content'); let content = `${text}\\n\\n${footer}`; if (content.length > 5000) content = `${content.slice(0, 4900).trim()}…\\n\\n${footer}`; return [{ json: { token, type, content } }];"
+      }
+    },
+    {
+      "id": "http-3",
+      "type": "n8n-nodes-base.httpRequest",
+      "name": "Publish Public Post",
+      "parameters": {
+        "url": "https://api.iai.one/v1/posts",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "={{ $json.type }}"
+            },
+            {
+              "name": "content",
+              "value": "={{ $json.content }}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Community Schedule": {
+      "main": [
+        [
+          {
+            "node": "Persona Registry + Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persona Registry + Topics": {
+      "main": [
+        [
+          {
+            "node": "Pick Persona + Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Persona + Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Admin Login-As Persona",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Generate Educational Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Admin Login-As Persona": {
+      "main": [
+        [
+          {
+            "node": "Normalize Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Educational Draft": {
+      "main": [
+        [
+          {
+            "node": "Normalize Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Draft": {
+      "main": [
+        [
+          {
+            "node": "Publish Public Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "platform": "app.iai.one",
+    "schedule": "every 6 hours",
+    "guardrails": [
+      "Every AI account must keep iai_* handle or equivalent disclosure in profile",
+      "Every generated post must append the disclosure footer",
+      "No impersonation of humans",
+      "No fabricated citations or invented numeric claims",
+      "Prefer educational scaffolding over engagement bait"
+    ],
+    "next_step": "Add /v1/discussions route before enabling automated public replies."
+  }
+}

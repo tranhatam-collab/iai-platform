@@ -234,7 +234,10 @@ export function CoursePlayer({ slug }: Props) {
     )
   }
 
-  const { course, chapters, reviews, purchased } = data
+  const { course } = data
+  const chapters = data.chapters ?? []
+  const reviews = data.reviews ?? []
+  const purchased = data.purchased ?? (course.price === 0)
   const currentChapter = chapters[activeChapter]
   const levelColor = getLevelColor(course.level)
   const canWatch = currentChapter?.is_free_preview || purchased

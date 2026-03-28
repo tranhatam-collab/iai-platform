@@ -1,0 +1,4 @@
+JWT_SECRET=local-dev-secret
+IAI_ADMIN_SECRET=local-admin-secret
+N8N_WEBHOOK_SECRET=local-webhook-secret
+ANTHROPIC_API_KEY=dummy
