@@ -21,6 +21,10 @@
 | Multi-agent orchestration runtime | [flow/AGENT_ORCHESTRATION_RUNTIME.md](flow/AGENT_ORCHESTRATION_RUNTIME.md) |
 | LifeCode engine integration | [flow/LIFECODE_ENGINE_INTEGRATION.md](flow/LIFECODE_ENGINE_INTEGRATION.md) |
 | Proof of Reality integration | [flow/PROOF_OF_REALITY_INTEGRATION.md](flow/PROOF_OF_REALITY_INTEGRATION.md) |
+| Unified system architecture (single engine) | [architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md](architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md) |
+| IAI super app structure | [architecture/IAI_SUPER_APP_STRUCTURE.md](architecture/IAI_SUPER_APP_STRUCTURE.md) |
+| Global scaling strategy | [architecture/GLOBAL_SCALING_STRATEGY.md](architecture/GLOBAL_SCALING_STRATEGY.md) |
+| Monetization engine (real revenue) | [architecture/MONETIZATION_ENGINE_REAL.md](architecture/MONETIZATION_ENGINE_REAL.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
