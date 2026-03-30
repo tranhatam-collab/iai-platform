@@ -10,6 +10,10 @@
 | Flow — cost & billing | [flow/COST_ENGINE_SPEC.md](flow/COST_ENGINE_SPEC.md) |
 | Flow — multi-tenant | [flow/MULTI_TENANT_ARCHITECTURE.md](flow/MULTI_TENANT_ARCHITECTURE.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
+| Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
+| Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
+| Incident response plan | [ops/INCIDENT_RESPONSE.md](ops/INCIDENT_RESPONSE.md) |
+| Backup & recovery runbook | [ops/BACKUP_RECOVERY_RUNBOOK.md](ops/BACKUP_RECOVERY_RUNBOOK.md) |
 | Flow + Proof / LifeCode specs (earlier) | [specs/](specs/) |
 | Homepage copy | [homepage/](homepage/) |
 
