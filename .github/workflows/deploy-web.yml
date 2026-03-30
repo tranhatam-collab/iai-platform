@@ -31,6 +31,7 @@ jobs:
         working-directory: apps/web
 
       - name: Build Next.js
+        if: github.event_name == 'push'
         run: npm run build
         working-directory: apps/web
         env:
