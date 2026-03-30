@@ -3,6 +3,7 @@
 | Area | Path |
 |------|------|
 | Production DB schema | [database/DATABASE_FULL_SCHEMA.sql](database/DATABASE_FULL_SCHEMA.sql) |
+| Product DB baseline (Life OS + Flow) | [database/DATABASE_FINAL_LIFE_OS_FLOW.sql](database/DATABASE_FINAL_LIFE_OS_FLOW.sql) |
 | API routes (v1) | [api/API_ROUTES_FULL_SPEC.md](api/API_ROUTES_FULL_SPEC.md) |
 | Flow node library (100+ nodes) | [flow/FLOW_NODE_LIBRARY_SPEC.md](flow/FLOW_NODE_LIBRARY_SPEC.md) |
 | Flow + dash — D1 schema (control plane) | [flow/FLOW_DATABASE_SCHEMA.md](flow/FLOW_DATABASE_SCHEMA.md) |
@@ -25,6 +26,9 @@
 | MVP user experience flow | [execution/MVP_USER_EXPERIENCE_FLOW.md](execution/MVP_USER_EXPERIENCE_FLOW.md) |
 | First 1000 users strategy | [execution/FIRST_1000_USERS_STRATEGY.md](execution/FIRST_1000_USERS_STRATEGY.md) |
 | Investor narrative | [execution/INVESTOR_NARRATIVE.md](execution/INVESTOR_NARRATIVE.md) |
+| UI wireframe (pixel-level) | [product/UI_WIREFRAME_APP_PIXEL_LEVEL.md](product/UI_WIREFRAME_APP_PIXEL_LEVEL.md) |
+| First 5 flows (real) | [product/FIRST_5_FLOWS_REAL.md](product/FIRST_5_FLOWS_REAL.md) |
+| Landing page conversion copy | [product/LANDING_PAGE_CONVERT_IAI_ONE.md](product/LANDING_PAGE_CONVERT_IAI_ONE.md) |
 | Unified system architecture (single engine) | [architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md](architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md) |
 | IAI super app structure | [architecture/IAI_SUPER_APP_STRUCTURE.md](architecture/IAI_SUPER_APP_STRUCTURE.md) |
 | Global scaling strategy | [architecture/GLOBAL_SCALING_STRATEGY.md](architecture/GLOBAL_SCALING_STRATEGY.md) |
