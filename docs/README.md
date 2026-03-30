@@ -9,6 +9,7 @@
 | Flow — queues & events | [flow/QUEUE_EVENT_SYSTEM_SPEC.md](flow/QUEUE_EVENT_SYSTEM_SPEC.md) |
 | Flow — cost & billing | [flow/COST_ENGINE_SPEC.md](flow/COST_ENGINE_SPEC.md) |
 | Flow — multi-tenant | [flow/MULTI_TENANT_ARCHITECTURE.md](flow/MULTI_TENANT_ARCHITECTURE.md) |
+| Flow — DEV checklist tuần 1–4 (flow / api / dash) | [flow/DEV_ACTION_FILE_FLOW_WEEK_1_TO_4.md](flow/DEV_ACTION_FILE_FLOW_WEEK_1_TO_4.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
