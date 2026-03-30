@@ -18,6 +18,9 @@
 | Flow API module structure | [flow/FLOW_API_MODULE_STRUCTURE.md](flow/FLOW_API_MODULE_STRUCTURE.md) |
 | Run artifact storage spec | [flow/RUN_ARTIFACT_STORAGE_SPEC.md](flow/RUN_ARTIFACT_STORAGE_SPEC.md) |
 | Queue consumer idempotency spec | [flow/QUEUE_CONSUMER_IDEMPOTENCY_SPEC.md](flow/QUEUE_CONSUMER_IDEMPOTENCY_SPEC.md) |
+| Multi-agent orchestration runtime | [flow/AGENT_ORCHESTRATION_RUNTIME.md](flow/AGENT_ORCHESTRATION_RUNTIME.md) |
+| LifeCode engine integration | [flow/LIFECODE_ENGINE_INTEGRATION.md](flow/LIFECODE_ENGINE_INTEGRATION.md) |
+| Proof of Reality integration | [flow/PROOF_OF_REALITY_INTEGRATION.md](flow/PROOF_OF_REALITY_INTEGRATION.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
