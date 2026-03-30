@@ -21,7 +21,7 @@ jobs:
           node-version: '20'
 
       - name: Install root deps
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Type check API worker
         run: npm run typecheck
