@@ -15,9 +15,11 @@ fetch("/api/runs")
 .then(data=>{
   runs.innerHTML = data.map(r=>`
     <div>
-      Flow: ${r.flow}
-      Status: ${r.status}
+      Flow: ${r.flow}<br/>
+      Status: ${r.status}<br/>
+      At: ${r.created_at || "-"}
     </div>
+    <hr/>
   `).join("");
 });
 </script>
