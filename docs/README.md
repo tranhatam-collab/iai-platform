@@ -29,6 +29,7 @@
 | UI wireframe (pixel-level) | [product/UI_WIREFRAME_APP_PIXEL_LEVEL.md](product/UI_WIREFRAME_APP_PIXEL_LEVEL.md) |
 | First 5 flows (real) | [product/FIRST_5_FLOWS_REAL.md](product/FIRST_5_FLOWS_REAL.md) |
 | Landing page conversion copy | [product/LANDING_PAGE_CONVERT_IAI_ONE.md](product/LANDING_PAGE_CONVERT_IAI_ONE.md) |
+| Runnable MVP demo scaffold | [../demo/life-os-mvp/](../demo/life-os-mvp/) |
 | Unified system architecture (single engine) | [architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md](architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md) |
 | IAI super app structure | [architecture/IAI_SUPER_APP_STRUCTURE.md](architecture/IAI_SUPER_APP_STRUCTURE.md) |
 | Global scaling strategy | [architecture/GLOBAL_SCALING_STRATEGY.md](architecture/GLOBAL_SCALING_STRATEGY.md) |

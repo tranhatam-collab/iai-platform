@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IAI Dashboard</title>
+</head>
+<body>
+
+<h1>Dashboard</h1>
+
+<div id="runs"></div>
+
+<script>
+fetch("/api/runs")
+.then(r=>r.json())
+.then(data=>{
+  runs.innerHTML = data.map(r=>`
+    <div>
+      Flow: ${r.flow}
+      Status: ${r.status}
+    </div>
+  `).join("");
+});
+</script>
+
+</body>
+</html>
