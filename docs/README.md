@@ -21,6 +21,10 @@
 | Multi-agent orchestration runtime | [flow/AGENT_ORCHESTRATION_RUNTIME.md](flow/AGENT_ORCHESTRATION_RUNTIME.md) |
 | LifeCode engine integration | [flow/LIFECODE_ENGINE_INTEGRATION.md](flow/LIFECODE_ENGINE_INTEGRATION.md) |
 | Proof of Reality integration | [flow/PROOF_OF_REALITY_INTEGRATION.md](flow/PROOF_OF_REALITY_INTEGRATION.md) |
+| Execution layer 90-day plan | [execution/EXECUTION_PRIORITY_ROADMAP_90_DAYS.md](execution/EXECUTION_PRIORITY_ROADMAP_90_DAYS.md) |
+| MVP user experience flow | [execution/MVP_USER_EXPERIENCE_FLOW.md](execution/MVP_USER_EXPERIENCE_FLOW.md) |
+| First 1000 users strategy | [execution/FIRST_1000_USERS_STRATEGY.md](execution/FIRST_1000_USERS_STRATEGY.md) |
+| Investor narrative | [execution/INVESTOR_NARRATIVE.md](execution/INVESTOR_NARRATIVE.md) |
 | Unified system architecture (single engine) | [architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md](architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md) |
 | IAI super app structure | [architecture/IAI_SUPER_APP_STRUCTURE.md](architecture/IAI_SUPER_APP_STRUCTURE.md) |
 | Global scaling strategy | [architecture/GLOBAL_SCALING_STRATEGY.md](architecture/GLOBAL_SCALING_STRATEGY.md) |
