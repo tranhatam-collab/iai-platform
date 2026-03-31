@@ -26,6 +26,9 @@
 | MVP user experience flow | [execution/MVP_USER_EXPERIENCE_FLOW.md](execution/MVP_USER_EXPERIENCE_FLOW.md) |
 | First 1000 users strategy | [execution/FIRST_1000_USERS_STRATEGY.md](execution/FIRST_1000_USERS_STRATEGY.md) |
 | Investor narrative | [execution/INVESTOR_NARRATIVE.md](execution/INVESTOR_NARRATIVE.md) |
+| Daily execution plan | [execution/DAILY_EXECUTION_PLAN.md](execution/DAILY_EXECUTION_PLAN.md) |
+| Team structure | [execution/TEAM_STRUCTURE.md](execution/TEAM_STRUCTURE.md) |
+| Founding playbook | [execution/FOUNDING_PLAYBOOK.md](execution/FOUNDING_PLAYBOOK.md) |
 | UI wireframe (pixel-level) | [product/UI_WIREFRAME_APP_PIXEL_LEVEL.md](product/UI_WIREFRAME_APP_PIXEL_LEVEL.md) |
 | Production React dashboard UI | [product/UI_PRODUCTION_REACT_DASHBOARD.md](product/UI_PRODUCTION_REACT_DASHBOARD.md) |
 | Flow builder drag-drop UX spec | [product/FLOW_BUILDER_DRAG_DROP.md](product/FLOW_BUILDER_DRAG_DROP.md) |
@@ -52,6 +55,8 @@
 | Enterprise entry strategy | [scale/ENTERPRISE_ENTRY_STRATEGY.md](scale/ENTERPRISE_ENTRY_STRATEGY.md) |
 | Global brand positioning | [scale/GLOBAL_BRAND_POSITIONING.md](scale/GLOBAL_BRAND_POSITIONING.md) |
 | Capital strategy | [scale/CAPITAL_STRATEGY.md](scale/CAPITAL_STRATEGY.md) |
+| Global SEO system foundation | [foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md](foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md) |
+| SEO URL standard | [foundation/SEO_URL_STANDARD.md](foundation/SEO_URL_STANDARD.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
