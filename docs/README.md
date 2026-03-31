@@ -27,6 +27,7 @@
 | First 1000 users strategy | [execution/FIRST_1000_USERS_STRATEGY.md](execution/FIRST_1000_USERS_STRATEGY.md) |
 | Investor narrative | [execution/INVESTOR_NARRATIVE.md](execution/INVESTOR_NARRATIVE.md) |
 | Daily execution plan | [execution/DAILY_EXECUTION_PLAN.md](execution/DAILY_EXECUTION_PLAN.md) |
+| IAI launch 30-day plan (survival sprint) | [execution/IAI_LAUNCH_30_DAYS_PLAN.md](execution/IAI_LAUNCH_30_DAYS_PLAN.md) |
 | Team structure | [execution/TEAM_STRUCTURE.md](execution/TEAM_STRUCTURE.md) |
 | Founding playbook | [execution/FOUNDING_PLAYBOOK.md](execution/FOUNDING_PLAYBOOK.md) |
 | UI wireframe (pixel-level) | [product/UI_WIREFRAME_APP_PIXEL_LEVEL.md](product/UI_WIREFRAME_APP_PIXEL_LEVEL.md) |
