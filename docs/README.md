@@ -57,6 +57,7 @@
 | Capital strategy | [scale/CAPITAL_STRATEGY.md](scale/CAPITAL_STRATEGY.md) |
 | Global SEO system foundation | [foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md](foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md) |
 | SEO URL standard | [foundation/SEO_URL_STANDARD.md](foundation/SEO_URL_STANDARD.md) |
+| Master operating system manifest (locked) | [foundation/MASTER_OPERATING_SYSTEM_MANIFEST.md](foundation/MASTER_OPERATING_SYSTEM_MANIFEST.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
