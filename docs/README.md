@@ -44,6 +44,10 @@
 | Agent runtime (real) | [production/AGENT_RUNTIME_REAL.md](production/AGENT_RUNTIME_REAL.md) |
 | Proof system (real) | [production/PROOF_SYSTEM_REAL.md](production/PROOF_SYSTEM_REAL.md) |
 | Full production structure | [production/FULL_PRODUCTION_STRUCTURE.md](production/FULL_PRODUCTION_STRUCTURE.md) |
+| Onboarding flow (high conversion) | [growth/ONBOARDING_FLOW_HIGH_CONVERSION.md](growth/ONBOARDING_FLOW_HIGH_CONVERSION.md) |
+| Habit loop engine (12 weeks) | [growth/HABIT_LOOP_ENGINE_12_WEEKS.md](growth/HABIT_LOOP_ENGINE_12_WEEKS.md) |
+| Community system retention | [growth/COMMUNITY_SYSTEM_RETENTION.md](growth/COMMUNITY_SYSTEM_RETENTION.md) |
+| First 100 real cases framework | [growth/FIRST_100_CASE_REAL.md](growth/FIRST_100_CASE_REAL.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
