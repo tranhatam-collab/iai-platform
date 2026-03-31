@@ -48,6 +48,10 @@
 | Habit loop engine (12 weeks) | [growth/HABIT_LOOP_ENGINE_12_WEEKS.md](growth/HABIT_LOOP_ENGINE_12_WEEKS.md) |
 | Community system retention | [growth/COMMUNITY_SYSTEM_RETENTION.md](growth/COMMUNITY_SYSTEM_RETENTION.md) |
 | First 100 real cases framework | [growth/FIRST_100_CASE_REAL.md](growth/FIRST_100_CASE_REAL.md) |
+| Viral loop engine | [scale/VIRAL_LOOP_ENGINE.md](scale/VIRAL_LOOP_ENGINE.md) |
+| Enterprise entry strategy | [scale/ENTERPRISE_ENTRY_STRATEGY.md](scale/ENTERPRISE_ENTRY_STRATEGY.md) |
+| Global brand positioning | [scale/GLOBAL_BRAND_POSITIONING.md](scale/GLOBAL_BRAND_POSITIONING.md) |
+| Capital strategy | [scale/CAPITAL_STRATEGY.md](scale/CAPITAL_STRATEGY.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
