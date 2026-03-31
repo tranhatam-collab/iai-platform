@@ -55,6 +55,7 @@
 | Enterprise entry strategy | [scale/ENTERPRISE_ENTRY_STRATEGY.md](scale/ENTERPRISE_ENTRY_STRATEGY.md) |
 | Global brand positioning | [scale/GLOBAL_BRAND_POSITIONING.md](scale/GLOBAL_BRAND_POSITIONING.md) |
 | Capital strategy | [scale/CAPITAL_STRATEGY.md](scale/CAPITAL_STRATEGY.md) |
+| World expansion playbook (VN -> global) | [scale/IAI_WORLD_EXPANSION_PLAYBOOK.md](scale/IAI_WORLD_EXPANSION_PLAYBOOK.md) |
 | Global SEO system foundation | [foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md](foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md) |
 | SEO URL standard | [foundation/SEO_URL_STANDARD.md](foundation/SEO_URL_STANDARD.md) |
 | Master operating system manifest (locked) | [foundation/MASTER_OPERATING_SYSTEM_MANIFEST.md](foundation/MASTER_OPERATING_SYSTEM_MANIFEST.md) |
