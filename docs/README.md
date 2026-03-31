@@ -27,13 +27,23 @@
 | First 1000 users strategy | [execution/FIRST_1000_USERS_STRATEGY.md](execution/FIRST_1000_USERS_STRATEGY.md) |
 | Investor narrative | [execution/INVESTOR_NARRATIVE.md](execution/INVESTOR_NARRATIVE.md) |
 | UI wireframe (pixel-level) | [product/UI_WIREFRAME_APP_PIXEL_LEVEL.md](product/UI_WIREFRAME_APP_PIXEL_LEVEL.md) |
+| Production React dashboard UI | [product/UI_PRODUCTION_REACT_DASHBOARD.md](product/UI_PRODUCTION_REACT_DASHBOARD.md) |
+| Flow builder drag-drop UX spec | [product/FLOW_BUILDER_DRAG_DROP.md](product/FLOW_BUILDER_DRAG_DROP.md) |
+| Life dashboard UX | [product/LIFE_DASHBOARD_UI.md](product/LIFE_DASHBOARD_UI.md) |
 | First 5 flows (real) | [product/FIRST_5_FLOWS_REAL.md](product/FIRST_5_FLOWS_REAL.md) |
 | Landing page conversion copy | [product/LANDING_PAGE_CONVERT_IAI_ONE.md](product/LANDING_PAGE_CONVERT_IAI_ONE.md) |
+| Landing page high-conversion spec | [product/LANDING_PAGE_HIGH_CONVERSION.md](product/LANDING_PAGE_HIGH_CONVERSION.md) |
 | Runnable MVP demo scaffold | [../demo/life-os-mvp/](../demo/life-os-mvp/) |
 | Unified system architecture (single engine) | [architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md](architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md) |
 | IAI super app structure | [architecture/IAI_SUPER_APP_STRUCTURE.md](architecture/IAI_SUPER_APP_STRUCTURE.md) |
 | Global scaling strategy | [architecture/GLOBAL_SCALING_STRATEGY.md](architecture/GLOBAL_SCALING_STRATEGY.md) |
 | Monetization engine (real revenue) | [architecture/MONETIZATION_ENGINE_REAL.md](architecture/MONETIZATION_ENGINE_REAL.md) |
+| Cloudflare Workers full backend | [production/CLOUDFLARE_WORKERS_FULL_BACKEND.md](production/CLOUDFLARE_WORKERS_FULL_BACKEND.md) |
+| Multi-user auth system | [production/MULTI_USER_AUTH_SYSTEM.md](production/MULTI_USER_AUTH_SYSTEM.md) |
+| Real flow engine runtime | [production/FLOW_ENGINE_REAL_RUNTIME.md](production/FLOW_ENGINE_REAL_RUNTIME.md) |
+| Agent runtime (real) | [production/AGENT_RUNTIME_REAL.md](production/AGENT_RUNTIME_REAL.md) |
+| Proof system (real) | [production/PROOF_SYSTEM_REAL.md](production/PROOF_SYSTEM_REAL.md) |
+| Full production structure | [production/FULL_PRODUCTION_STRUCTURE.md](production/FULL_PRODUCTION_STRUCTURE.md) |
 | Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
 | Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
 | Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
