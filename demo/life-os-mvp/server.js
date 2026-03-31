@@ -121,6 +121,24 @@ app.get("/api/runs", (_req, res) => {
   );
 });
 
+app.get("/api/checkins/latest", (_req, res) => {
+  const sql = `
+    SELECT * FROM (
+      SELECT id, clarity, stability, value, legacy, created_at
+      FROM life_checkins
+      ORDER BY id DESC
+      LIMIT 12
+    ) recent
+    ORDER BY id ASC
+  `;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: "Failed to load check-in history" });
+    }
+    return res.json(rows);
+  });
+});
+
 app.listen(3000, () => {
   console.log("Running on http://localhost:3000");
 });

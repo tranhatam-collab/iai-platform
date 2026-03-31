@@ -52,3 +52,14 @@ button {
   border: none;
   cursor: pointer;
 }
+
+.trend {
+  padding: 20px;
+}
+
+#trendChart {
+  width: 100%;
+  max-width: 980px;
+  background: #1c1f2b;
+  border-radius: 12px;
+}
