@@ -1,4 +1,5 @@
 name = "iai-api"
+account_id = "93112cc89181e75335cbd7ef7e392ba3"
 main = "src/index.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
@@ -48,6 +49,7 @@ database_name = "iai-db"
 database_id   = "a806b0d9-027a-4887-ae7a-3abfbed04a2f"
 
 [env.production]
+name = "iai-api"
 vars = { IAI_ENV = "production", ALLOWED_ORIGINS = "https://app.iai.one,https://www.app.iai.one,https://iai.one,https://www.iai.one,https://ai.muonnoi.org", N8N_BASE_URL = "https://flows.iai.one", SELF_URL = "https://api.iai.one", APP_URL = "https://app.iai.one" }
 
 [[env.production.d1_databases]]
@@ -71,6 +73,7 @@ bucket_name         = "iai-media"
 preview_bucket_name = "iai-media-dev"
 
 [env.preview]
+name = "iai-api-preview"
 vars = { IAI_ENV = "preview", ALLOWED_ORIGINS = "https://preview.app.iai.one,http://localhost:3000", N8N_BASE_URL = "https://flows.iai.one", SELF_URL = "https://api.iai.one", APP_URL = "https://preview.app.iai.one" }
 
 [[env.preview.d1_databases]]

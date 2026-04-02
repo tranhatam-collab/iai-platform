@@ -1,9 +1,11 @@
 import { spawn } from 'node:child_process'
+import { existsSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const wranglerCli = resolve(root, 'node_modules/wrangler/wrangler-dist/cli.js')
 const rawTarget = process.argv[2]
 const target = ['local', 'preview', 'prod'].includes(rawTarget) ? rawTarget : 'local'
 const skipSeed = process.argv.includes('--skip-seed')
@@ -15,6 +17,10 @@ const dbName = target === 'preview'
   ? (process.env.D1_PREVIEW_DB_NAME || 'iai-db')
   : (target === 'prod' ? (process.env.D1_PROD_DB_NAME || 'iai-db') : 'iai-db')
 
+if (!existsSync(wranglerCli)) {
+  throw new Error(`Wrangler CLI not found at ${wranglerCli}. Run npm install first.`)
+}
+
 const files = [
   'packages/database/schema.sql',
   'packages/database/migration_v2.sql',
@@ -23,7 +29,7 @@ const files = [
 
 for (const file of files) {
   console.log(`\n==> D1 ${target} (${dbName}): ${file}`)
-  await run('wrangler', [
+  await run(process.execPath, [wranglerCli,
     'd1', 'execute', dbName,
     ...envFlag,
     ...dbModeFlag,
