@@ -46,3 +46,49 @@ vars = { IAI_ENV = "development", ALLOWED_ORIGINS = "http://localhost:8788,http:
 binding       = "DB"
 database_name = "iai-db"
 database_id   = "a806b0d9-027a-4887-ae7a-3abfbed04a2f"
+
+[env.production]
+vars = { IAI_ENV = "production", ALLOWED_ORIGINS = "https://app.iai.one,https://www.app.iai.one,https://iai.one,https://www.iai.one,https://ai.muonnoi.org", N8N_BASE_URL = "https://flows.iai.one", SELF_URL = "https://api.iai.one", APP_URL = "https://app.iai.one" }
+
+[[env.production.d1_databases]]
+binding       = "DB"
+database_name = "iai-db"
+database_id   = "a806b0d9-027a-4887-ae7a-3abfbed04a2f"
+
+[[env.production.kv_namespaces]]
+binding    = "CACHE"
+id         = "845da2404b6b44ac92d65b57966b221c"
+preview_id = "599fb46d70e5434fba40f547e89d963d"
+
+[[env.production.kv_namespaces]]
+binding    = "SESSIONS"
+id         = "9480d8018ea74d12afd7dad723fe4f9f"
+preview_id = "c4dffce8b89a48948375ed6b3cf6d7da"
+
+[[env.production.r2_buckets]]
+binding             = "MEDIA"
+bucket_name         = "iai-media"
+preview_bucket_name = "iai-media-dev"
+
+[env.preview]
+vars = { IAI_ENV = "preview", ALLOWED_ORIGINS = "https://preview.app.iai.one,http://localhost:3000", N8N_BASE_URL = "https://flows.iai.one", SELF_URL = "https://api.iai.one", APP_URL = "https://preview.app.iai.one" }
+
+[[env.preview.d1_databases]]
+binding       = "DB"
+database_name = "iai-db"
+database_id   = "a806b0d9-027a-4887-ae7a-3abfbed04a2f"
+
+[[env.preview.kv_namespaces]]
+binding    = "CACHE"
+id         = "845da2404b6b44ac92d65b57966b221c"
+preview_id = "599fb46d70e5434fba40f547e89d963d"
+
+[[env.preview.kv_namespaces]]
+binding    = "SESSIONS"
+id         = "9480d8018ea74d12afd7dad723fe4f9f"
+preview_id = "c4dffce8b89a48948375ed6b3cf6d7da"
+
+[[env.preview.r2_buckets]]
+binding             = "MEDIA"
+bucket_name         = "iai-media"
+preview_bucket_name = "iai-media-dev"
