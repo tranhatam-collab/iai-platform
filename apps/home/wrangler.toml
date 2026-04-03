@@ -1,0 +1,10 @@
+name                   = "iai-home"
+compatibility_date     = "2024-09-23"
+compatibility_flags    = ["nodejs_compat"]
+pages_build_output_dir = "out"
+
+[env.production]
+vars = { IAI_ENV = "production", APP_URL = "https://home.iai.one", ROOT_URL = "https://iai.one", COMMUNITY_URL = "https://app.iai.one" }
+
+[env.preview]
+vars = { IAI_ENV = "development", APP_URL = "http://localhost:3001", ROOT_URL = "https://iai.one", COMMUNITY_URL = "https://app.iai.one" }

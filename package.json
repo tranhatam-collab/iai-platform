@@ -3,12 +3,22 @@
   "private": true,
   "version": "1.0.0",
   "description": "IAI — Intelligence · Artistry · International · iai.one (monorepo)",
-  "workspaces": ["apps/*", "workers/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "workers/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "node scripts/dev-local.mjs",
     "dev:api": "cd workers/api && wrangler dev --env dev --local --port 8787",
+    "dev:home": "cd apps/home && npm run dev",
+    "dev:flow": "cd apps/flow && npm run dev",
     "dev:web": "cd apps/web && NEXT_PUBLIC_API_URL=http://127.0.0.1:8787 npm run dev",
     "deploy:api": "node scripts/deploy-api.mjs",
+    "deploy:home:preview": "node scripts/deploy-home.mjs preview",
+    "deploy:home:prod": "node scripts/deploy-home.mjs prod",
+    "deploy:flow:preview": "node scripts/deploy-flow.mjs preview",
+    "deploy:flow:prod": "node scripts/deploy-flow.mjs prod",
     "deploy:web": "cd apps/web && wrangler pages deploy .vercel/output/static --project-name app-iai-one --branch main --commit-dirty=true",
     "deploy:preview": "node scripts/deploy.mjs preview",
     "deploy:prod": "node scripts/deploy.mjs prod",
@@ -27,6 +37,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260308.0",
     "typescript": "^5.4.0",
+    "vercel": "^47.0.4",
     "wrangler": "^4.0.0"
   }
 }
