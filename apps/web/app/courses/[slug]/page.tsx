@@ -9,10 +9,11 @@ import { CoursePlayer } from './CoursePlayer'
 export const runtime = 'edge'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  await params
   // In production: fetch course data from API and build rich metadata
   return {
     title: `Khóa học — IAI`,
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function CoursePage({ params }: Props) {
-  return <CoursePlayer slug={params.slug} />
+export default async function CoursePage({ params }: Props) {
+  const { slug } = await params
+  return <CoursePlayer slug={slug} />
 }

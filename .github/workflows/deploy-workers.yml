@@ -19,10 +19,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install root deps
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Type check API worker
         run: npm run typecheck

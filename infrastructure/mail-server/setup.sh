@@ -1,0 +1,162 @@
+#!/bin/bash
+# ═══════════════════════════════════════════════════════════════
+#  IAI Mail Server — Bootstrap Mailcow + IAI Mail API
+#  Architecture:
+#    - Mailcow owns ports 25/80/443/465/587/993/4190
+#    - IAI Mail API runs in Docker on the Mailcow network
+#    - /api/* is proxied by Mailcow's nginx to the API bridge
+#
+#  Usage:
+#    chmod +x setup.sh
+#    sudo ./setup.sh
+#
+#  Required env before running:
+#    export MAIL_HOSTNAME=mail.iai.one
+#    export IAI_API_KEY=your-secret-api-key
+#  Optional:
+#    export MAIL_TZ=Asia/Ho_Chi_Minh
+# ═══════════════════════════════════════════════════════════════
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MAIL_HOSTNAME="${MAIL_HOSTNAME:-mail.iai.one}"
+MAIL_TZ="${MAIL_TZ:-Asia/Ho_Chi_Minh}"
+IAI_API_KEY="${IAI_API_KEY:-$(openssl rand -hex 32)}"
+MAILCOW_DIR="${MAILCOW_DIR:-/opt/mailcow-dockerized}"
+IAI_API_DIR="/opt/iai-mail-api"
+
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Please run setup.sh as root."
+  exit 1
+fi
+
+echo ""
+echo "═══════════════════════════════════════"
+echo "  IAI Mail Server Setup"
+echo "  Hostname: $MAIL_HOSTNAME"
+echo "  Timezone: $MAIL_TZ"
+echo "═══════════════════════════════════════"
+echo ""
+
+# ── 1. System update ─────────────────────────────────────────
+echo "[1/8] Updating system..."
+apt-get update -q && apt-get upgrade -yq
+apt-get install -yq \
+  git curl wget nano htop ufw fail2ban jq \
+  ca-certificates gnupg lsb-release openssl
+
+# ── 2. Docker ────────────────────────────────────────────────
+echo "[2/8] Installing Docker..."
+if ! command -v docker &> /dev/null; then
+  curl -fsSL https://get.docker.com | sh
+  systemctl enable docker
+  systemctl start docker
+fi
+
+# ── 3. Firewall ──────────────────────────────────────────────
+echo "[3/8] Configuring firewall..."
+ufw --force reset
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow ssh
+ufw allow 80/tcp      # HTTP (Let's Encrypt)
+ufw allow 443/tcp     # HTTPS
+ufw allow 25/tcp      # SMTP (receiving mail)
+ufw allow 465/tcp     # SMTPS
+ufw allow 587/tcp     # Submission
+ufw allow 993/tcp     # IMAPS
+ufw allow 4190/tcp    # Sieve (optional)
+ufw --force enable
+echo "Firewall configured."
+
+# ── 4. fail2ban ──────────────────────────────────────────────
+echo "[4/8] Configuring fail2ban..."
+cat > /etc/fail2ban/jail.local << 'JAIL'
+[DEFAULT]
+bantime  = 3600
+findtime = 600
+maxretry = 5
+
+[sshd]
+enabled = true
+JAIL
+systemctl restart fail2ban
+
+# ── 5. Mailcow ───────────────────────────────────────────────
+echo "[5/8] Installing Mailcow..."
+if [ ! -d "$MAILCOW_DIR" ]; then
+  git clone --depth 1 https://github.com/mailcow/mailcow-dockerized "$MAILCOW_DIR"
+fi
+cd "$MAILCOW_DIR"
+
+if [ ! -f mailcow.conf ]; then
+  ./generate_config.sh <<< "$MAIL_HOSTNAME
+$MAIL_TZ"
+fi
+
+sed -i "s|^MAILCOW_HOSTNAME=.*|MAILCOW_HOSTNAME=${MAIL_HOSTNAME}|" mailcow.conf
+sed -i "s|^TZ=.*|TZ=${MAIL_TZ}|" mailcow.conf
+
+# Tune Mailcow config for lower memory usage
+sed -i 's/^SKIP_CLAMD=.*/SKIP_CLAMD=y/' mailcow.conf  # disable ClamAV to save ~500MB RAM
+sed -i 's/^SKIP_SOLR=.*/SKIP_SOLR=y/' mailcow.conf    # disable Solr search index
+
+docker compose pull
+docker compose up -d
+echo "Mailcow started. Admin UI: https://$MAIL_HOSTNAME (after DNS + SSL)"
+
+# ── 6. IAI Email API ─────────────────────────────────────────
+echo "[6/8] Installing IAI Email API..."
+mkdir -p "$IAI_API_DIR"
+cp "$SCRIPT_DIR/api/"* "$IAI_API_DIR/"
+
+COMPOSE_PROJECT_NAME="$(grep '^COMPOSE_PROJECT_NAME=' "$MAILCOW_DIR/mailcow.conf" | cut -d= -f2)"
+MAILCOW_NETWORK="${COMPOSE_PROJECT_NAME}_mailcow-network"
+
+cat > "$IAI_API_DIR/.env" << ENV
+PORT=3000
+IAI_API_KEY=${IAI_API_KEY}
+SMTP_HOST=postfix-mailcow
+SMTP_PORT=25
+ALLOWED_FROM_DOMAINS=iai.one
+ENV
+
+docker build -t iai-mail-api "$IAI_API_DIR"
+docker rm -f iai-mail-api >/dev/null 2>&1 || true
+docker run -d \
+  --name iai-mail-api \
+  --restart unless-stopped \
+  --network "$MAILCOW_NETWORK" \
+  -p 127.0.0.1:3000:3000 \
+  --env-file "$IAI_API_DIR/.env" \
+  iai-mail-api
+
+echo "IAI Email API running on 127.0.0.1:3000"
+
+# ── 7. Nginx ─────────────────────────────────────────────────
+echo "[7/8] Configuring Mailcow nginx for /api..."
+install -m 0644 "$SCRIPT_DIR/nginx/mail.conf" "$MAILCOW_DIR/data/conf/nginx/site.iai-mail-api.custom"
+docker compose restart nginx-mailcow
+
+# ── 8. Summary ───────────────────────────────────────────────
+echo ""
+echo "═══════════════════════════════════════"
+echo "  Setup complete!"
+echo "═══════════════════════════════════════"
+echo ""
+echo "  IMPORTANT — Save these:"
+echo "  API Key: $IAI_API_KEY"
+echo "  Mailcow admin: https://$MAIL_HOSTNAME"
+echo "  API endpoint:  https://$MAIL_HOSTNAME/_mail/emails"
+echo ""
+echo "  NEXT STEPS:"
+echo "  1. Add/fix DNS records (single SPF, _dmarc only)"
+echo "  2. Wait for Mailcow ACME to issue SSL:"
+echo "     docker compose -f $MAILCOW_DIR/docker-compose.yml logs -f acme-mailcow"
+echo "  3. Add your domains/mailboxes in Mailcow"
+echo "  4. Publish the DKIM TXT records generated by Mailcow"
+echo "  5. Update Cloudflare Worker secrets:"
+echo "     MAIL_API_URL=https://$MAIL_HOSTNAME/_mail"
+echo "     MAIL_API_KEY=<the key above>"
+echo ""

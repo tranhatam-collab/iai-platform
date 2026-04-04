@@ -7,15 +7,17 @@ export const runtime = 'edge'
 import type { Metadata } from 'next'
 import { UserProfileClient } from './UserProfileClient'
 
-type Props = { params: { handle: string } }
+type Props = { params: Promise<{ handle: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { handle } = await params
   return {
-    title: `@${params.handle} — IAI`,
-    description: `Hồ sơ của @${params.handle} trên IAI — Intelligence · Artistry · International`,
+    title: `@${handle} — IAI`,
+    description: `Hồ sơ của @${handle} trên IAI — Intelligence · Artistry · International`,
   }
 }
 
-export default function UserProfilePage({ params }: Props) {
-  return <UserProfileClient handle={params.handle} />
+export default async function UserProfilePage({ params }: Props) {
+  const { handle } = await params
+  return <UserProfileClient handle={handle} />
 }

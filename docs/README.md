@@ -1,0 +1,72 @@
+# IAI.ONE Platform — documentation index
+
+| Area | Path |
+|------|------|
+| Production DB schema | [database/DATABASE_FULL_SCHEMA.sql](database/DATABASE_FULL_SCHEMA.sql) |
+| Product DB baseline (Life OS + Flow) | [database/DATABASE_FINAL_LIFE_OS_FLOW.sql](database/DATABASE_FINAL_LIFE_OS_FLOW.sql) |
+| API routes (v1) | [api/API_ROUTES_FULL_SPEC.md](api/API_ROUTES_FULL_SPEC.md) |
+| Flow node library (100+ nodes) | [flow/FLOW_NODE_LIBRARY_SPEC.md](flow/FLOW_NODE_LIBRARY_SPEC.md) |
+| Flow + dash — D1 schema (control plane) | [flow/FLOW_DATABASE_SCHEMA.md](flow/FLOW_DATABASE_SCHEMA.md) |
+| Flow — queues & events | [flow/QUEUE_EVENT_SYSTEM_SPEC.md](flow/QUEUE_EVENT_SYSTEM_SPEC.md) |
+| Flow — cost & billing | [flow/COST_ENGINE_SPEC.md](flow/COST_ENGINE_SPEC.md) |
+| Flow — multi-tenant | [flow/MULTI_TENANT_ARCHITECTURE.md](flow/MULTI_TENANT_ARCHITECTURE.md) |
+| Flow — DEV checklist tuần 1–4 (flow / api / dash) | [flow/DEV_ACTION_FILE_FLOW_WEEK_1_TO_4.md](flow/DEV_ACTION_FILE_FLOW_WEEK_1_TO_4.md) |
+| Dash runtime app spec | [flow/DASH_IAI_ONE_RUNTIME_APP_SPEC.md](flow/DASH_IAI_ONE_RUNTIME_APP_SPEC.md) |
+| Dash screen-by-screen copy | [flow/DASH_SCREEN_BY_SCREEN_COPY.md](flow/DASH_SCREEN_BY_SCREEN_COPY.md) |
+| Flow execution state machine | [flow/FLOW_EXECUTION_STATE_MACHINE.md](flow/FLOW_EXECUTION_STATE_MACHINE.md) |
+| Approval system spec | [flow/APPROVAL_SYSTEM_SPEC.md](flow/APPROVAL_SYSTEM_SPEC.md) |
+| Stripe meter integration spec | [flow/STRIPE_METER_INTEGRATION_SPEC.md](flow/STRIPE_METER_INTEGRATION_SPEC.md) |
+| Flow API module structure | [flow/FLOW_API_MODULE_STRUCTURE.md](flow/FLOW_API_MODULE_STRUCTURE.md) |
+| Run artifact storage spec | [flow/RUN_ARTIFACT_STORAGE_SPEC.md](flow/RUN_ARTIFACT_STORAGE_SPEC.md) |
+| Queue consumer idempotency spec | [flow/QUEUE_CONSUMER_IDEMPOTENCY_SPEC.md](flow/QUEUE_CONSUMER_IDEMPOTENCY_SPEC.md) |
+| Multi-agent orchestration runtime | [flow/AGENT_ORCHESTRATION_RUNTIME.md](flow/AGENT_ORCHESTRATION_RUNTIME.md) |
+| LifeCode engine integration | [flow/LIFECODE_ENGINE_INTEGRATION.md](flow/LIFECODE_ENGINE_INTEGRATION.md) |
+| Proof of Reality integration | [flow/PROOF_OF_REALITY_INTEGRATION.md](flow/PROOF_OF_REALITY_INTEGRATION.md) |
+| Execution layer 90-day plan | [execution/EXECUTION_PRIORITY_ROADMAP_90_DAYS.md](execution/EXECUTION_PRIORITY_ROADMAP_90_DAYS.md) |
+| MVP user experience flow | [execution/MVP_USER_EXPERIENCE_FLOW.md](execution/MVP_USER_EXPERIENCE_FLOW.md) |
+| First 1000 users strategy | [execution/FIRST_1000_USERS_STRATEGY.md](execution/FIRST_1000_USERS_STRATEGY.md) |
+| Investor narrative | [execution/INVESTOR_NARRATIVE.md](execution/INVESTOR_NARRATIVE.md) |
+| Daily execution plan | [execution/DAILY_EXECUTION_PLAN.md](execution/DAILY_EXECUTION_PLAN.md) |
+| IAI launch 30-day plan (survival sprint) | [execution/IAI_LAUNCH_30_DAYS_PLAN.md](execution/IAI_LAUNCH_30_DAYS_PLAN.md) |
+| Team structure | [execution/TEAM_STRUCTURE.md](execution/TEAM_STRUCTURE.md) |
+| Founding playbook | [execution/FOUNDING_PLAYBOOK.md](execution/FOUNDING_PLAYBOOK.md) |
+| UI wireframe (pixel-level) | [product/UI_WIREFRAME_APP_PIXEL_LEVEL.md](product/UI_WIREFRAME_APP_PIXEL_LEVEL.md) |
+| Production React dashboard UI | [product/UI_PRODUCTION_REACT_DASHBOARD.md](product/UI_PRODUCTION_REACT_DASHBOARD.md) |
+| Flow builder drag-drop UX spec | [product/FLOW_BUILDER_DRAG_DROP.md](product/FLOW_BUILDER_DRAG_DROP.md) |
+| Life dashboard UX | [product/LIFE_DASHBOARD_UI.md](product/LIFE_DASHBOARD_UI.md) |
+| First 5 flows (real) | [product/FIRST_5_FLOWS_REAL.md](product/FIRST_5_FLOWS_REAL.md) |
+| Landing page conversion copy | [product/LANDING_PAGE_CONVERT_IAI_ONE.md](product/LANDING_PAGE_CONVERT_IAI_ONE.md) |
+| Landing page high-conversion spec | [product/LANDING_PAGE_HIGH_CONVERSION.md](product/LANDING_PAGE_HIGH_CONVERSION.md) |
+| Runnable MVP demo scaffold | [../demo/life-os-mvp/](../demo/life-os-mvp/) |
+| Unified system architecture (single engine) | [architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md](architecture/SYSTEM_UNIFICATION_ARCHITECTURE.md) |
+| IAI super app structure | [architecture/IAI_SUPER_APP_STRUCTURE.md](architecture/IAI_SUPER_APP_STRUCTURE.md) |
+| Global scaling strategy | [architecture/GLOBAL_SCALING_STRATEGY.md](architecture/GLOBAL_SCALING_STRATEGY.md) |
+| Monetization engine (real revenue) | [architecture/MONETIZATION_ENGINE_REAL.md](architecture/MONETIZATION_ENGINE_REAL.md) |
+| Cloudflare Workers full backend | [production/CLOUDFLARE_WORKERS_FULL_BACKEND.md](production/CLOUDFLARE_WORKERS_FULL_BACKEND.md) |
+| Multi-user auth system | [production/MULTI_USER_AUTH_SYSTEM.md](production/MULTI_USER_AUTH_SYSTEM.md) |
+| Real flow engine runtime | [production/FLOW_ENGINE_REAL_RUNTIME.md](production/FLOW_ENGINE_REAL_RUNTIME.md) |
+| Agent runtime (real) | [production/AGENT_RUNTIME_REAL.md](production/AGENT_RUNTIME_REAL.md) |
+| Proof system (real) | [production/PROOF_SYSTEM_REAL.md](production/PROOF_SYSTEM_REAL.md) |
+| Full production structure | [production/FULL_PRODUCTION_STRUCTURE.md](production/FULL_PRODUCTION_STRUCTURE.md) |
+| Onboarding flow (high conversion) | [growth/ONBOARDING_FLOW_HIGH_CONVERSION.md](growth/ONBOARDING_FLOW_HIGH_CONVERSION.md) |
+| Habit loop engine (12 weeks) | [growth/HABIT_LOOP_ENGINE_12_WEEKS.md](growth/HABIT_LOOP_ENGINE_12_WEEKS.md) |
+| Community system retention | [growth/COMMUNITY_SYSTEM_RETENTION.md](growth/COMMUNITY_SYSTEM_RETENTION.md) |
+| First 100 real cases framework | [growth/FIRST_100_CASE_REAL.md](growth/FIRST_100_CASE_REAL.md) |
+| Viral loop engine | [scale/VIRAL_LOOP_ENGINE.md](scale/VIRAL_LOOP_ENGINE.md) |
+| Enterprise entry strategy | [scale/ENTERPRISE_ENTRY_STRATEGY.md](scale/ENTERPRISE_ENTRY_STRATEGY.md) |
+| Global brand positioning | [scale/GLOBAL_BRAND_POSITIONING.md](scale/GLOBAL_BRAND_POSITIONING.md) |
+| Capital strategy | [scale/CAPITAL_STRATEGY.md](scale/CAPITAL_STRATEGY.md) |
+| World expansion playbook (VN -> global) | [scale/IAI_WORLD_EXPANSION_PLAYBOOK.md](scale/IAI_WORLD_EXPANSION_PLAYBOOK.md) |
+| Global SEO system foundation | [foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md](foundation/GLOBAL_SEO_SYSTEM_FOUNDATION.md) |
+| SEO URL standard | [foundation/SEO_URL_STANDARD.md](foundation/SEO_URL_STANDARD.md) |
+| Master operating system manifest (locked) | [foundation/MASTER_OPERATING_SYSTEM_MANIFEST.md](foundation/MASTER_OPERATING_SYSTEM_MANIFEST.md) |
+| IAI global constitution (public declaration) | [foundation/IAI_GLOBAL_CONSTITUTION.md](foundation/IAI_GLOBAL_CONSTITUTION.md) |
+| Security architecture | [security/SECURITY_ARCHITECTURE.md](security/SECURITY_ARCHITECTURE.md) |
+| Access control matrix (RBAC + scope) | [security/ACCESS_CONTROL_MATRIX.md](security/ACCESS_CONTROL_MATRIX.md) |
+| Privacy data map | [security/PRIVACY_DATA_MAP.md](security/PRIVACY_DATA_MAP.md) |
+| Incident response plan | [ops/INCIDENT_RESPONSE.md](ops/INCIDENT_RESPONSE.md) |
+| Backup & recovery runbook | [ops/BACKUP_RECOVERY_RUNBOOK.md](ops/BACKUP_RECOVERY_RUNBOOK.md) |
+| Flow + Proof / LifeCode specs (earlier) | [specs/](specs/) |
+| Homepage copy | [homepage/](homepage/) |
+
+**Execution stack (reference):** [Cloudflare Workflows](https://developers.cloudflare.com/workflows/) (durable execution; inherits Workers limits), [Queues](https://developers.cloudflare.com/queues/), [Durable Objects](https://developers.cloudflare.com/durable-objects/), [D1](https://developers.cloudflare.com/d1/).

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>IAI Life OS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">IAI</div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Life</a>
+    <a href="#">Flows</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <h1>Your Life System</h1>
+  <p>Measure. Improve. Act.</p>
+  <button onclick="startCheckin()">Start Weekly Check-in</button>
+</section>
+
+<section class="metrics">
+  <div class="card" id="clarity">Clarity: --</div>
+  <div class="card" id="stability">Stability: --</div>
+  <div class="card" id="value">Value: --</div>
+  <div class="card" id="legacy">Legacy: --</div>
+</section>
+
+<section class="checkin" id="checkinForm" style="display:none;">
+  <h2>Weekly Check-in</h2>
+
+  <input id="energy" placeholder="Energy (1-10)" />
+  <input id="sleep" placeholder="Sleep (1-10)" />
+  <input id="stress" placeholder="Stress (1-10)" />
+  <input id="focus" placeholder="Focus (1-10)" />
+  <input id="work" placeholder="Work clarity (1-10)" />
+  <input id="rel" placeholder="Relationships (1-10)" />
+  <input id="contrib" placeholder="Contribution (1-10)" />
+
+  <button onclick="submitCheckin()">Submit</button>
+</section>
+
+<section id="actions"></section>
+
+<section class="trend">
+  <h2>Life Trend (Last 12 check-ins)</h2>
+  <canvas id="trendChart" width="980" height="280"></canvas>
+</section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

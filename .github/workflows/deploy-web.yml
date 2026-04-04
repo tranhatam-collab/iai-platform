@@ -21,10 +21,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
         working-directory: apps/web
 
       - name: Type check
@@ -32,6 +31,7 @@ jobs:
         working-directory: apps/web
 
       - name: Build Next.js
+        if: github.event_name == 'push'
         run: npm run build
         working-directory: apps/web
         env:
@@ -41,6 +41,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://iai.one
 
       - name: Deploy to Cloudflare Pages
+        if: github.event_name == 'push'
         uses: cloudflare/pages-action@v1
         with:
           apiToken:      ${{ secrets.CF_API_TOKEN }}

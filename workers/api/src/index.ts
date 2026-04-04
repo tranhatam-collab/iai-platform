@@ -17,6 +17,7 @@ import { handleCopyright }   from './routes/copyright'
 import { handlePayment }     from './routes/payment'
 import { handleMedia }       from './routes/media'
 import { handleIpfs }        from './routes/ipfs'
+import { handleSocialAuth }  from './routes/auth-social'
 import type { Bindings } from './types'
 
 export default {
@@ -56,6 +57,7 @@ export default {
 
     // ── Route dispatcher ──────────────────────────────────
     try {
+      if (path.startsWith('/v1/auth'))        return handleSocialAuth(request, env, path)
       if (path.startsWith('/v1/admin'))       return handleAdmin(request, env, path)
       if (path.startsWith('/v1/verify'))      return handleVerify(request, env, path)
       if (path.startsWith('/v1/users'))       return handleUsers(request, env, path)

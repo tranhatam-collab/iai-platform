@@ -1,0 +1,10 @@
+name                   = "iai-flow-web"
+compatibility_date     = "2024-09-23"
+compatibility_flags    = ["nodejs_compat"]
+pages_build_output_dir = "out"
+
+[env.production]
+vars = { IAI_ENV = "production", APP_URL = "https://flow.iai.one", API_URL = "https://api.flow.iai.one" }
+
+[env.preview]
+vars = { IAI_ENV = "development", APP_URL = "http://localhost:3002", API_URL = "http://localhost:8788" }
